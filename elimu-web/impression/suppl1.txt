@@ -1,0 +1,6 @@
+Situation Caisse Brut;310675
+Avance sur Salaire;0
+Remboursement Agents;0
+Caisse Distributeur;-72310
+SURPLUS;4525
+Sitiuation Caisse Net;238365
