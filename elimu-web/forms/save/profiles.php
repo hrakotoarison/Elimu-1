@@ -1,5 +1,5 @@
 <?php
-$profile=$_SESSION["agence"];
+$profile=$_SESSION["profil"];
 $sqs="select count(*)nb from etablissements where status ='PRIVE'";
 $rs=mysql_query($sqs);
 $ls=mysql_fetch_array($rs);
@@ -34,12 +34,11 @@ if(verif == false){champ.value = champ.value.substr(0,x) + champ.value.substr(x+
 	<table border="0" cellpadding="3" cellspacing="0" width="600" >
 		<tbody><tr>
 			<TR>
-<TD ALIGN=LEFT ROWSPAN=1 NOWRAP width="200">&nbsp;Liste Des Profiles <SELECT NAME="libelle1" id="libelle1" required
+<TD ALIGN=LEFT ROWSPAN=1 NOWRAP width="200">&nbsp;Liste Des Cycles <SELECT NAME="libelle1" id="libelle1" required
 placeholder="Selectionner" autofocus/  onchange="submit();" >
 <OPTION >Selectionner</OPTION>
  <?php
-  $sqlstm2d="select  distinct cycle from categories  ORDER BY cycle";
-$req2d=mysql_query($sqlstm2d);
+$req2d=findBylib("categories","cycle");
 
 while($ligne2d=mysql_fetch_array($req2d))
 {
@@ -61,51 +60,51 @@ $slib2d=$ligne2d['cycle'];
 
 if($ns<>0){
 
-echo'<TR><td>
+echo'<TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="COMPTABLE" checked> COMPTABLE
 </td></TR>';
 }
 if($discipline=='PRESCOLAIRE' or $discipline=='ELEMENTAIRE'){
-echo'<TR><td>
-<INPUT type="checkbox" name="choix[]" value="DIRECTEUR" checked> SURVEILLANT GENERAL
-</td></TR><TR><td>
+echo'<TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
+<INPUT type="checkbox" name="choix[]" value="DIRECTEUR" checked> DIRECTEUR
+</td></TR><TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="ENSEIGNANT" checked> ENSEIGNANT
-</td></TR><TR><td>
+</td></TR><TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="AUTRES" checked> AUTRES
 </td></TR>';
 }
 elseif($discipline=='SECONDAIRE'){
 
-echo'<TR><td>
+echo'<TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="CENSEUR" checked> CENSEUR
 </td></TR>
-<TR><td>
+<TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="SURVEILLANT" checked> SURVEILLANT
-</td></TR><TR><td>
+</td></TR><TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="PROFESSEUR" checked> PROFESSEUR
-</td></TR><TR><td>
+</td></TR><TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="AUTRES" checked> AUTRES
 </td></TR>';
 }
 elseif($discipline=='MOYEN'){
-echo'<TR><td>
-<INPUT type="checkbox" name="choix[]" value="PRINCIPAL" checked> SURVEILLANT GENERAL
-</td></TR><TR><td>
+echo'<TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
+<INPUT type="checkbox" name="choix[]" value="PRINCIPAL" checked> PRINCIPAL
+</td></TR><TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="SURVEILLANT" checked> SURVEILLANT
-</td></TR><TR><td>
+</td></TR><TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="PROFESSEUR" checked> PROFESSEUR
-</td></TR><TR><td>
+</td></TR><TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="AUTRES" checked> AUTRES
 </td></TR>';
 }
 elseif($discipline=='PROFESSIONNEL'){
-echo'</TR><td>
+echo'</TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="DIRECTEUR DES ETUDES" checked> DIRECTEUR DES ETUDES
-</td></TR><TR><td>
+</td></TR><TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="SURVEILLANT" checked> SURVEILLANT
-</td></TR><TR><td>
+</td></TR><TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="PROFESSEUR" checked> PROFESSEUR
-</td></TR><TR><td>
+</td></TR><TR><td ROWSPAN=1  ALIGN=LEFT NOWRAP>
 <INPUT type="checkbox" name="choix[]" value="AUTRES" checked> AUTRES
 </td></TR>';
 

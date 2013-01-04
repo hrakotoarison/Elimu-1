@@ -65,7 +65,7 @@ else{
 		<TR>
 <B>&nbsp;Evaluation &nbsp;*&nbsp;</B><SELECT NAME="evaluation" id="evaluation" required>
 <OPTION value=""></OPTION>
- <?
+ <?php
 $sqlst="select id,date_prevue,discipline,type from evaluations where  classe='".htmlentities($sclasse)."' and annee='$annee' and semestre='$codes' and id not in (select evaluation from notes) and 
 evaluations.discipline in( select discipline from enseigner where personnel='$personnel') order by type ,date_prevue desc ";
 $req=mysql_query($sqlst);
@@ -81,8 +81,8 @@ $table = 'disciplines';
                             //echo"<option value='".$ro[0]."'>".$ro[1]."</option>";
     			
 ?>
-  <OPTION value="<?echo $id;?>"><?echo $type.' de '.$ro[1].' du '.$datep;?>
-  <?
+  <OPTION value="<?phpecho $id;?>"><?phpecho $type.' de '.$ro[1].' du '.$datep;?>
+  <?php
 }
 ?>
  </OPTION></SELECT></TD></TR>

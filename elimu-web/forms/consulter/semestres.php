@@ -8,7 +8,7 @@
   				 	<!--<th width="150">Niveau Etude</th>!-->
                 </tr>
 				<tbody><tr>
-				<?
+				<?php
               		$selection = findByAll('semestres');
               		while($row1 = mysql_fetch_row($selection))
 				 	{

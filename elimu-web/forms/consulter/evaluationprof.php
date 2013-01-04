@@ -33,7 +33,7 @@ echo $datejour .' n\'est dans  aucun semestre donc impossible de faire un traite
   				 	<th width="150">Lieu</th>
                 </tr>
 				<tbody><tr>
-				<?
+				<?php
               		$selection = findByNValue('evaluations',"evaluations.discipline in(select discipline from enseigner where personnel='$matricule' and annee='$annee') and annee='$annee' and semestre='$code'");
               		while($row1 = mysql_fetch_row($selection))
 				 	{
@@ -50,7 +50,7 @@ $array_heure=explode(":",$hd);
 						$dis=$row1[4];
 					 $titres = findByValue('disciplines','iddis',$dis);
 						$tit = mysql_fetch_row($titres);
-						$discipline=$tit[1];
+						$discipline=accents($tit[1]);
 						$classe=$row1[5];
 						$type=$row1[6];
 						$sal=$row1[9];
@@ -65,14 +65,6 @@ $array_heure=explode(":",$hd);
 							<td  align=center>$type</td>					
 							<td  align=center>$salle</td>
 							";
-						/*$etagiaire = findByValue('rayon','idRa',$p2);
-						$champ = mysql_fetch_row($etagiaire);
-						$p8=$champ[1];
-						//$p9=$champ[2];
-						//$p10=$champ[3];
-						//$p11=$champ[4];
-						echo"
-							<td  align=center>$p8</td></tr>";*/
         			}
   				 ?>
 </tr></tbody>

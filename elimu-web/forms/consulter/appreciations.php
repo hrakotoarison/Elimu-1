@@ -6,7 +6,7 @@
   				 	<th width="150">Note Maximale</th>
                 </tr>
 				<tbody><tr>
-				<?
+				<?php
               		$selection = findByAll('apreciations');
               		while($row1 = mysql_fetch_row($selection))
 				 	{

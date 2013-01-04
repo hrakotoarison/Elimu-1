@@ -130,7 +130,7 @@ function go1(){
 <TR>
 <TD><B>&nbsp;Semestre :*</B>&nbsp;&nbsp;&nbsp;&nbsp;<SELECT NAME="semestre" id="semestre" required>
  <OPTION  value=""></OPTION>
- <?
+ <?php
 $sqa="SELECT id,libelle FROM semestres where annee='$annee'";
 $rea=mysql_query($sqa);
 while($ligna=mysql_fetch_array($rea))
@@ -139,25 +139,25 @@ $ids=$ligna['id'];
 $slib=$ligna['libelle'];
 
 ?>
-  <OPTION value="<?echo $ids;?>"><?echo $slib;?>
-  <?
+  <OPTION value="<?php echo $ids;?>"><?php echo $slib;?>
+  <?php
 }
 ?>
  </OPTION></SELECT>&nbsp;&nbsp;
 
 <B>&nbsp;Jour :*</B>&nbsp;&nbsp;&nbsp;&nbsp;<SELECT NAME="jour" id="Jour" required>
  <OPTION  value=""></OPTION>
- <?
+ <?php
 $sq="SELECT id,libelle FROM jours";
 $re=mysql_query($sq);
 while($lign=mysql_fetch_array($re))
 {
 $ids=$lign['id'];
-$slib=$lign['libelle'];
+$slib=accents($lign['libelle']);
 
 ?>
-  <OPTION value="<?echo $ids;?>"><?echo $slib;?>
-  <?
+  <OPTION value="<?php echo $ids;?>"><?php echo $slib;?>
+  <?php
 }
 ?>
  </OPTION></SELECT>&nbsp;&nbsp;
@@ -217,8 +217,8 @@ $slib=$lign['libelle'];
 <OPTION value="21:00">21H10</OPTION>
 </TR>
 <TR><TD class=petit>&nbsp;</TD>
-<td><input type="hidden" name="classe" value="<?php echo $classe;?>" id="classe"></td>
-<td><input type="hidden" name="annee" value="<?php echo $annee;?>" id="annee"></td>
+<td><input type="hidden" name="classe" value="<?phpphp echo $classe;?>" id="classe"></td>
+<td><input type="hidden" name="annee" value="<?phpphp echo $annee;?>" id="annee"></td>
 </TR>
 
 <tr>

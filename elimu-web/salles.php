@@ -1,7 +1,7 @@
 <?php
 session_start();
 $menu=$_SESSION["menu"];
-$profile=$_SESSION["agence"];
+$profile=$_SESSION["profil"];
 /*if (isset($_GET["vis"])) {
   $titre=" Série >> Consultation" ;
   $pageint="consulter/serie.php";

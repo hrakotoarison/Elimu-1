@@ -49,7 +49,7 @@ $sqlst="select id,debut,fin,discipline from emploi_temps where annee='$annee' an
  and jour=(select id from jours where libelle='$datefr') and id not in
  (select emploi from cours where annee='$annee' and cours.classe='".htmlentities($sclasse)."') and ((debut <'$hd' and fin<='$hf') or ( debut < '$hd' and fin< '$hf') or(debut >='$hf' and fin>='$hf') or ( debut < '$hd' and fin> '$hf')) ";
  else
- $sqlst="select id,debut,fin,discipline from emploi_temps where annee='$annee' and semestre='$codes'and classe='".htmlentities($sclasse)."' and professeur='$personnel'
+ echo$sqlst="select id,debut,fin,discipline from emploi_temps where annee='$annee' and semestre='$codes'and classe='".htmlentities($sclasse)."' and professeur='$personnel'
  and jour=(select id from jours where libelle='$datefr') and id not in
  (select emploi from cours where annee='$annee' and cours.classe='".htmlentities($sclasse)."')";
  if($type=='JOURNEE'){
@@ -60,7 +60,7 @@ else{
 		<TR>
 <B>&nbsp;Cours &nbsp;*&nbsp;</B><SELECT NAME="cours" id="cours" required>
 <OPTION value=""></OPTION>
- <?
+ <?php
 $req=mysql_query($sqlst);
 while($lig=mysql_fetch_array($req))
 {
@@ -74,8 +74,8 @@ $table = 'disciplines';
                             //echo"<option value='".$ro[0]."'>".$ro[1]."</option>";
     			
 ?>
-  <OPTION value="<?echo $id;?>"><?echo $ro[1].' de '.$datep.' à '.$discipline;?>
-  <?
+  <OPTION value="<?php echo $id;?>"><?php echo $ro[1].' de '.$datep.' à '.$discipline;?>
+  <?php
 }
 ?>
  </OPTION></SELECT></TD></TR>

@@ -1,31 +1,5 @@
 <?php
-function accents($valeur){ 
-$val=str_replace(utf8_encode('Ç'), '&Ccedil;', $valeur);
-$val=str_replace(utf8_encode('É'), '&Eacute;', $val);
-$val=str_replace(utf8_encode('À'), '&Agrave;', $val);
-$val=str_replace(utf8_encode('Â'), '&Acirc;', $val);
-$val=str_replace(utf8_encode('Î'), '&Icirc;', $val);
-$val=str_replace(utf8_encode('È'), '&Egrave;', $val);
-$val=str_replace(utf8_encode('Ê'), '&Ecirc;', $val);
-$val=str_replace(utf8_encode('Ô'), '&Ocirc;', $val);
-$val=str_replace(utf8_encode('Û'), '&Ucirc;', $val);
-$val=str_replace(utf8_encode('Ù'), '&Ugrave', $val);
-$val=str_replace(utf8_encode('Ï'), '&Iuml;', $val);
-
-$val=str_replace(utf8_encode('ç'), '&ccedil;', $valeur);
-$val=str_replace(utf8_encode('é'), '&eacute;', $val);
-$val=str_replace(utf8_encode('à'), '&agrave;', $val);
-$val=str_replace(utf8_encode('â'), '&acirc;', $val);
-$val=str_replace(utf8_encode('î'), '&icirc;', $val);
-$val=str_replace(utf8_encode('è'), '&egrave;', $val);
-$val=str_replace(utf8_encode('ê'), '&Ecirc;', $val);
-$val=str_replace(utf8_encode('ô'), '&ocirc;', $val);
-$val=str_replace(utf8_encode('û'), '&ucirc;', $val);
-$val=str_replace(utf8_encode('ù'), '&ugrave', $val);
-$val=str_replace(utf8_encode('ï'), '&iuml;', $val);
-
-return $val;
-}
+//save profile
 function save_profile(){
 	if(isset($_POST["libelle1"])){
 
@@ -87,11 +61,11 @@ else{
 	
 	 while ($niveau = array_shift($choix)) 
 {
-echo $niveau;
+
  $exereq=mysql_query("select * from etudes where libelle='$niveau' ");
     if(mysql_num_rows($exereq)==0){
 
-echo$sql_ajout="INSERT INTO etudes(niveau,libelle,cycle) VALUES ('".htmlentities($niveau)."','".htmlentities($niveau)."','".htmlentities($cycle)."')";
+$sql_ajout="INSERT INTO etudes(idetude,niveau,libelle,cycle) VALUES ('','".htmlentities($niveau)."','".htmlentities($niveau)."','".htmlentities($cycle)."')";
 $query_ajout=mysql_query($sql_ajout) ;
 			if($query_ajout){
 				//$sql_ajoutm="INSERT INTO mensualites VALUES ('', '$mensualite','$inscription', '$niveau')";
@@ -125,7 +99,7 @@ else{
 
  $exereq=mysql_query("select * from etudes where libelle=concat('$niveau','$serie') ");
     if(mysql_num_rows($exereq)==0){
- 	$sql_ajout="INSERT INTO etudes VALUES ('$niveau', '$serie', concat('$niveau','$serie'),'$cycle')";
+ 	$sql_ajout="INSERT INTO etudes VALUES ('','$niveau', '$serie', concat('$niveau','$serie'),'$cycle')";
 
     $query_ajout=mysql_query($sql_ajout) or die(mysql_error);
 			if($query_ajout){
@@ -156,7 +130,7 @@ $niv=htmlentities($niveau);
 $se=htmlentities($serie);
  $exereq=mysql_query("select * from etudes where libelle=concat('$niv','$se') ");
     if(mysql_num_rows($exereq)==0){
- 	$sql_ajout="INSERT INTO etudes VALUES ('$niv', '$se', concat('$niv','$se'),'$cycle')";
+ 	$sql_ajout="INSERT INTO etudes VALUES ('','$niv', '$se', concat('$niv','$se'),'$cycle')";
 
     $query_ajout=mysql_query($sql_ajout) or die(mysql_error);
 			if($query_ajout){
@@ -179,16 +153,17 @@ $se=htmlentities($serie);
     }
 }
  }
-  elseif(($niveau=='Tle')){
- if($serie=='S' || $serie=='L'){
+elseif(($niveau=='Tle')){
+ if($serie=='S' or $serie=='L'){
 echo 'la serie doit etre différent de S et de L';
 }
 else{
 $niv=htmlentities($niveau);
 $se=htmlentities($serie);
- $exereq=mysql_query("select * from etudes where libelle=concat('$niv','$se' ");
+//$libel=$niv.se
+ $exereq=mysql_query("select * from etudes where libelle=concat('$niv','$se') ");
     if(mysql_num_rows($exereq)==0){
- 	$sql_ajout="INSERT INTO etudes VALUES ('$niv', '$se', concat('$niv','$se'),'$cycle')";
+ 	$sql_ajout="INSERT INTO etudes VALUES ('','$niv', '$se', concat('$niv','$se'),'$cycle')";
 
     $query_ajout=mysql_query($sql_ajout) or die(mysql_error);
 			if($query_ajout){
@@ -223,7 +198,7 @@ $se=htmlentities($serie);
  $exereq=mysql_query("select * from etudes where libelle=concat('$niv','$se')");
     if(mysql_num_rows($exereq)==0){
 
-$sql_ajout="INSERT INTO etudes VALUES ('$niv', '$se', concat('$niv','$se'),'$cycle')";
+$sql_ajout="INSERT INTO etudes VALUES ('','$niv', '$se', concat('$niv','$se'),'$cycle')";
 $query_ajout=mysql_query($sql_ajout) ;
 			if($query_ajout){
 			//	$sql_ajoutm="INSERT INTO mensualites VALUES ('', '$mensualite','$inscription', concat('$niveau','$serie'))";
@@ -332,12 +307,10 @@ $exereq=mysql_query("select * from classes where libelle= concat('$niv','$v') ")
 function save_discipline(){
 if(isset($_POST["libelle"])){
 	$nom = addslashes($_POST['libelle']);
-	$cycle = addslashes($_POST['cycle']);
-	$credit = addslashes($_POST['credit_horaire']);
- $choix=@$_POST["choix"];
+$choix=@$_POST["choix"];
  $ctrl=sizeof($choix);
 if($ctrl==0 ){
-echo"Attention vous n'avez pas cochez aucune classe !!";
+echo"Attention vous n'avez pas cochez aucun cycle !!";
 //exit;
 }
 else{
@@ -346,10 +319,10 @@ else{
 $ch= htmlspecialchars($monchoix, ENT_QUOTES);
 $uv= htmlspecialchars($nom, ENT_QUOTES);
             // ("select * from disciplines where libelle= '".$uv."' and etude='".$ch."'");
-			//  echo ("select * from disciplines where libelle= '".htmlentities($nom)."' and etude='".htmlentities($monchoix)."'");
-	   $exereq=mysql_query("select * from disciplines where libelle= '".htmlentities($nom)."' and etude='".htmlentities($monchoix)."'");
+			// echo ("select * from disciplines where libelle= '".htmlentities($nom)."' and cycle='".htmlentities($monchoix)."'");
+	    $exereq=mysql_query("select * from disciplines where libelle= '".htmlentities($nom)."' and cycle='".htmlentities($monchoix)."'");
      if(mysql_num_rows($exereq)==0){
- 	$sql_ajout="INSERT INTO disciplines VALUES ( '','".htmlentities($nom)."','".$credit."','".htmlentities($monchoix)."')";
+ 	$sql_ajout="INSERT INTO disciplines VALUES ( '','".htmlentities($nom)."','".htmlentities($monchoix)."')";
    $query_ajout=mysql_query($sql_ajout) ;
 			if($query_ajout){
 			echo"<div align=center class=imp>enregistrement valide!</div>";
@@ -360,7 +333,7 @@ $uv= htmlspecialchars($nom, ENT_QUOTES);
      		}  
       	  }
      else{
-    	echo "<br>Discipline   ".htmlentities($nom)." déja enregistrée pour le niveaux d'etude ".htmlentities($monchoix);
+    	echo "<br>Discipline   ".htmlentities($nom)." déja enregistrée pour le cycle ".htmlentities($monchoix);
 		}
 	 }
 	 } 
@@ -472,6 +445,7 @@ $in_msg = "Bienvenue à l'application Elimu de l'établissement ".$etablissement."
    $results = file('http://localhost:8011'.$url);
  }
  sendSmsMessage($in_phoneNumber, $in_msg);
+ 
 			echo"<div align=center class=imp>enregistrement valide!</div>";
 			}
 			else
@@ -536,6 +510,7 @@ else{
 
       }
      else{
+	 $newdebut="0000-00-00";
 	 $exereqs1=mysql_query("select date_debut from semestres where id= 'S2' and annee='$annee'");
 	while($ligne2s1=mysql_fetch_array($exereqs1))
 {
@@ -543,7 +518,8 @@ $newdebut=$ligne2s1['date_debut'];// mise a jour du premier semestre
 }
 //$finab = $dfin[2].$dfin[1].$dfin[0];
 	$finabnew = $dfin[0].'-'.$dfin[1].'-'.$dfin[2];
-	if($finabnew >=$newdebut){
+	if( ($newdebut<>'0000-00-00')and ($finabnew >=$newdebut)){
+	echo$finabnew .'>='.$newdebut;
 			echo"<div align=center class=imp>Le premier semestre ne pas etre inclu dans le second semestre, Changer le second semestre d'abord</div>";
 			}
 			else{
@@ -587,7 +563,7 @@ $dfins = explode("-", $fins1);
 	$fins = $dfins[0].$dfins[1].$dfins[2];//fin  semestre
 	$debutab = $ddebut[0].$ddebut[1].$ddebut[2];
 	$finab = $dfin[0].$dfin[1].$dfin[2];
-	if($pres >=$ddebut[2])
+	if($pres >=$ddebut[0])
 	echo"<div align=center class=imp>l'anneé debut du second semestre doit être >= à ".$pres."</div>";
 	elseif($ddebut[0]> $suiv )
 	echo"<div align=center class=imp>l'anneé debut du second semestre ne doit pas dépasser ".$suiv."</div>";
@@ -1102,7 +1078,7 @@ function save_evaluation(){
 	$sclasse = addslashes($_POST['classe']);
 	$annee =annee_academique();
 	$semestre = addslashes($_POST['semestre']);
-$status=$_SESSION["agence"];
+$status=$_SESSION["profil"];
 
 if($status=='PROFESSEUR')
 	$matricule = addslashes($_POST['matricule']);
@@ -1341,7 +1317,7 @@ else{
 	    $exereq=mysql_query("select * from decisions where libelle='$libelle' and etude='$monchoix'");
      if(mysql_num_rows($exereq)==0){
  	
- 	$sql_ajout="INSERT INTO decisions VALUES (upper('$libelle'),'$minis','$maxi','$monchoix')";
+ 	$sql_ajout="INSERT INTO decisions VALUES ('',upper('$libelle'),'$minis','$maxi','$monchoix')";
    $query_ajout=mysql_query($sql_ajout) ;
 			if($query_ajout){
 				

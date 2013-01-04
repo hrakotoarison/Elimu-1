@@ -1,9 +1,13 @@
 <?php
 session_start();
+include 'all_function.php';
 $rechtab="eleves";
 $menu=$_SESSION["menu"];
 $_SESSION["classe"]=$_GET['num'];
-$classe=$_SESSION["classe"];
+$code=$_SESSION["classe"];
+$etag1 = findByValue('classes','idclasse',$code);
+						$cha1 = mysql_fetch_row($etag1);
+						$classe=$cha1[3];
 if (isset($_GET["sup"])) {
   $titre="  Liste des Eléves de la ".$classe." >> Suppression" ;
   $pageint="forms/delete/eleves.php";

@@ -6,7 +6,7 @@
   				 	<th width="150">Capacité de la Salle</th>
                 </tr>
 				<tbody><tr>
-				<?
+				<?php
               		$selection = findByAll('salles');
               		while($row1 = mysql_fetch_row($selection))
 				 	{

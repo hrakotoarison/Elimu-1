@@ -17,30 +17,24 @@ if(verif == false){champ.value = champ.value.substr(0,x) + champ.value.substr(x+
 </script>
 
 <?php
-//header('Content-Type: text/html; charset=UTF-8');
-//header('Content-Type: text/html; charset=iso-8859-1');
 include 'all_function.php';
-if(isset($_POST['CLASSE_ID']))
+if(isset($_POST['DISCIPLINE_ID']))
 {
 //=$_POST['MAT'];
-$discipline =$_POST['CLASSE_ID'];
+$discipline =securite_bdd($_POST['DISCIPLINE_ID']);
 $annee=annee_academique();
 //  echo'discipline '.accents($discipline);
 echo'
   <TR><TD class=petit>&nbsp;</TD></TR>
 <tr>
-  <td style="padding-left:30px;" ALIGN=center>
+  <td style="padding-left:30px;" ALIGN=LEFT>
   <table cellpadding=2 cellspacing=1 border=2>
 	   	    <tr bgcolor=white align=center >
-			<th width=100>Niveau Etude</th>
+			<th width=200>Niveau Etude</th>
             <th width=200>Co&eacute;fficients</th>            
                      </tr>';
-
-
-
-$sqlstm4="select  distinct etude from credit_horaire where discipline='$discipline' and credit_horaire >0 and credit_horaire.etude not in
-(select etude from coefficients where discipline='$discipline' )  ORDER BY etude";
-$req4=mysql_query($sqlstm4);
+$req4=findByNValuelib("credit_horaire","etude","discipline='$discipline' and credit_horaire >0 and credit_horaire.etude not in
+(select etude from coefficients where discipline='$discipline' )");
 $nb=mysql_num_rows($req4);
                   $i=1;
 if($nb==0){
@@ -50,11 +44,14 @@ else{
 while($ligne4=mysql_fetch_array($req4))
 {
 $niveau=$ligne4['etude'];
-$niv=htmlentities($niveau);
+$t_etude = findByValue('etudes','idetude',$niveau);
+						$val_etude = mysql_fetch_row($t_etude);
+						$niv=$val_etude[1];
+//$niv=htmlentities($niveau);
   echo" <input name=nbart type=hidden value=$nb>";
 
       echo"<tr>
-			            <td align=center><b>$niveau</b></td>
+			            <td align=center><b>$niv</b></td>
 							<td  align=center>
 			            		  <input size=9 name=nbre_classe$i type=number min=1 max=20 required  onkeyup='verif_nombre(this);'>
 			            	 <script type=text/javascript>      //
@@ -63,7 +60,7 @@ $niv=htmlentities($niveau);
 			            		</td>
 			            		</td>
 							"; 
- echo" <input name=niveau$i type=hidden value='$niv'>";
+ echo" <input name=niveau$i type=hidden value='$niveau'>";
 
 
 

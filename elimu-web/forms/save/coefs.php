@@ -3,13 +3,13 @@ $sqs="select count(*)nb from etablissements where status ='PRIVE'";
 $rs=mysql_query($sqs);
 $ls=mysql_fetch_array($rs);
 $ns=$ls['nb'];
-		$profile=$_SESSION["agence"];
+		$profile=$_SESSION["profil"];
 				if($profile=="Administrateur"){
-$sqlstm2d="select iddis,libelle1 from disciplines where iddis in(select discipline from credit_horaire)   ORDER BY libelle1";
+$sqlstm2d="select iddis,libelle from disciplines where iddis in(select discipline from credit_horaire)   ORDER BY libelle";
 }
 else{
 
-$sqlstm2d="select iddis,libelle1 from disciplines where iddis in(select discipline from credit_horaire where etude in (select libelle from etudes where etudes.cycle in(select cycle from fonction where profile='$profile')))   ORDER BY libelle1";
+$sqlstm2d="select iddis,libelle from disciplines where iddis in(select discipline from credit_horaire where etude in (select libelle from etudes where etudes.cycle in(select cycle from fonction where profile='$profile')))   ORDER BY libelle";
 
 //	$selection = findByNValue('credit_horaire',"etude in(select libelle from etudes where etudes.cycle in(select cycle from fonction where profile='$profile'))");
 }
@@ -31,7 +31,7 @@ if(verif == false){champ.value = champ.value.substr(0,x) + champ.value.substr(x+
 
 }
 </script>
-<form name="inscription_form" action="<?php echo 'coefs.php?ajout=1';?>" method="post"onsubmit='return (conform(this));' >
+<form name="inscription_form" action="<?php echo lien();?>" method="post"onsubmit='return (conform(this));' >
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 	<script language="Javascript">
@@ -81,7 +81,7 @@ function go(){
 	
 		sel = document.getElementById('discipline');
 		discipline = sel.options[sel.selectedIndex].value;
-		xhr.send("CLASSE_ID="+discipline);
+		xhr.send("DISCIPLINE_ID="+discipline);
 }
 function go1(){
 	var xhr = getXhr();
@@ -129,7 +129,7 @@ $req2d=mysql_query($sqlstm2d);
 while($ligne2d=mysql_fetch_array($req2d))
 {
 $code_uv=$ligne2d['iddis'];
-$slib2d=$ligne2d['libelle1'];
+$slib2d=$ligne2d['libelle'];
  echo' <OPTION value="'.$code_uv.'">'.$slib2d;
  }
  echo'</OPTION>';?>

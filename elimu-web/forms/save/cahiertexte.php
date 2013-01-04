@@ -120,7 +120,7 @@ else{
 		<TR>
 <B>&nbsp;Cours &nbsp;*&nbsp;</B><SELECT NAME="cours" id="cours" required>
 <OPTION value=""></OPTION>
- <?
+ <?php
 $req=mysql_query($sqlst);
 while($lig=mysql_fetch_array($req))
 {
@@ -134,8 +134,8 @@ $table = 'disciplines';
                             //echo"<option value='".$ro[0]."'>".$ro[1]."</option>";
     			
 ?>
-  <OPTION value="<?echo $id;?>"><?echo $ro[1].' de '.$datep.' à '.$discipline;?>
-  <?
+  <OPTION value="<?php echo $id;?>"><?php echo $ro[1].' de '.$datep.' à '.$discipline;?>
+  <?php
 }
 ?>
  </OPTION></SELECT></TD></TR>
@@ -152,9 +152,9 @@ $table = 'disciplines';
 	</tbody>
 <TR><TD class=petit>&nbsp;</TD>
 
-<TD class=petit>&nbsp;<input type=hidden name="classe" value="<? echo $sclasse;?>"></TD>
-<td> <input type=hidden name="semestre"  value="<? echo $codes;?>"></td>
-<TD class=petit>&nbsp;<input type=hidden name="matricule" value="<? echo $personnel;?>"></TD>
+<TD class=petit>&nbsp;<input type=hidden name="classe" value="<?php echo $sclasse;?>"></TD>
+<td> <input type=hidden name="semestre"  value="<?php echo $codes;?>"></td>
+<TD class=petit>&nbsp;<input type=hidden name="matricule" value="<?php echo $personnel;?>"></TD>
 </TR>
 	<TR><TD><BUTTON TITLE="Confirmer l'Emargement"name="enregistrer" TYPE="submit" id="flashit"><b>Emarger</b></BUTTON>&nbsp;<BUTTON TITLE="Annuler " TYPE="reset"><b>&nbsp;Annuler&nbsp;</b></BUTTON></TD>
 	</table>

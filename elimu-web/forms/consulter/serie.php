@@ -6,7 +6,7 @@
   				 	
                 </tr>
 				<tbody><tr>
-				<?
+				<?php
               		$selection = findByAll('series');
               		while($row1 = mysql_fetch_row($selection))
 				 	{

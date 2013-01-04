@@ -138,7 +138,7 @@ function go2(){
 	<table border="0" cellpadding="3" cellspacing="0" width="100%" >
 		<tbody><tr>
 		<TR><TD class=petit>&nbsp;</TD>
-		<TD class=petit>&nbsp;<input type=hidden name="matricule" id="matricule" value="<? echo $matricule;?>"></TD>
+		<TD class=petit>&nbsp;<input type=hidden name="matricule" id="matricule" value="<?php echo $matricule;?>"></TD>
 		</TR>
 <TR>
 <TR><TD>

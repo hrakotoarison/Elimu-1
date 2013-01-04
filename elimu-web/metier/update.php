@@ -236,12 +236,12 @@ echo"<div align=center class=imp>Echec!Veuillez reprendre!</div>";
 }
 //update honneur
 function update_honneur(){
-if(isset($_POST["libelle"])){
+if(isset($_POST["id"])){
 
-	$libelle = addslashes($_POST['libelle']);
-	$debut=addslashes($_POST['debut']);
-	$fin=addslashes($_POST['fin']);
-		$mise="update honneurs set mini='$debut',maxi='$fin' where  libelle='$libelle'";
+	$id = addslashes($_POST['id']);
+	$debut=addslashes($_POST['mini']);
+	$fin=addslashes($_POST['maxi']);
+		$mise="update honneurs set mini='$debut',maxi='$fin' where  id='$id'";
 	$req2=mysql_query($mise);
 if($req2){
 
@@ -251,7 +251,7 @@ echo'<script Language="JavaScript">
 	echo'
 </SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
-location.href="honneurs.php"
+location.href="honneurs.php?vis=1"
 </SCRIPT>';
 }
 	else
@@ -261,19 +261,19 @@ location.href="honneurs.php"
  {alert ("Echec!Veuillez reprendre");
  }';
 		echo'<SCRIPT LANGUAGE="JavaScript">
-location.href="honneurs.php"
+location.href="honneurs.php?vis=1"
 </SCRIPT>';
 	}
 }
 }
 //update remarques
 function update_remarque(){
-if(isset($_POST["libelle"])){
+if(isset($_POST["id"])){
 
-	$libelle = addslashes($_POST['libelle']);
-	$debut=addslashes($_POST['debut']);
-	$fin=addslashes($_POST['fin']);
-		$mise="update remarques set mini='$debut',maxi='$fin' where  libelle='$libelle'";
+	$id = addslashes($_POST['id']);
+	$debut=addslashes($_POST['mini']);
+	$fin=addslashes($_POST['maxi']);
+		$mise="update remarques set mini='$debut',maxi='$fin' where  id='$id'";
 	$req2=mysql_query($mise);
 if($req2){
 
@@ -283,7 +283,7 @@ echo'<script Language="JavaScript">
 	echo'
 </SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
-location.href="remarques.php"
+location.href="remarques.php?mod=1"
 </SCRIPT>';
 }
 	else
@@ -293,7 +293,7 @@ location.href="remarques.php"
  {alert ("Echec!Veuillez reprendre");
  }';
 		echo'<SCRIPT LANGUAGE="JavaScript">
-location.href="remarques.php"
+location.href="remarques.php?mod=1"
 </SCRIPT>';
 	}
 	
@@ -335,13 +335,13 @@ location.href="appreciations.php"
 
 //update décision conseil
 function update_decision(){
-if(isset($_POST["libelle"])){
+if(isset($_POST["id"])){
 
-	$libelle = addslashes($_POST['libelle']);
-	$debut=addslashes($_POST['debut']);
-	$fin=addslashes($_POST['fin']);
+	$id = addslashes($_POST['id']);
+	$debut=addslashes($_POST['mini']);
+	$fin=addslashes($_POST['mini']);
 	$etude=addslashes($_POST['etude']);
-	$mise="update decisions set mini='$debut',maxi='$fin' where  libelle='$libelle' and etude='$etude'";
+	$mise="update decisions set mini='$debut',maxi='$fin' where  id='$id'";
 	$req2=mysql_query($mise);
 if($req2){
 
@@ -351,7 +351,7 @@ echo'<script Language="JavaScript">
 	echo'
 </SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
-location.href="decision.php"
+location.href="decision.php?mod=1"
 </SCRIPT>';
 }
 	else
@@ -361,7 +361,7 @@ location.href="decision.php"
  {alert ("Echec!Veuillez reprendre");
  }';
 		echo'<SCRIPT LANGUAGE="JavaScript">
-location.href="decision.php"
+location.href="decision.php?mod=1"
 </SCRIPT>';
 	}
 	

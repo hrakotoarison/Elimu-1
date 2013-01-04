@@ -99,7 +99,7 @@ echo'</table>';
 </TR>
 <TR><TD id="bouton">
 <div>          
-<a href="impression/impression.php?id=<?echo $sclasse;?>&dates=<?echo $annee;?>&page=<?echo 'BILANMENSUEL';?>" target="_blank" class=imp>Apper&ccedil;u</a>
+<a href="impression/impression.php?id=<?php echo $sclasse;?>&dates=<?php echo $annee;?>&page=<?php echo 'BILANMENSUEL';?>" target="_blank" class=imp>Apper&ccedil;u</a>
 </div>
 	</table>
 </div>

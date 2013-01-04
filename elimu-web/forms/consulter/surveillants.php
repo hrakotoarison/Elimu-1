@@ -7,14 +7,14 @@
   				 	
                 </tr>
 				<tbody><tr>
-				<?
+				<?php
 				$annee=annee_academique();
 				//liste des surveillants
 				 $table = 'surveiller';
 				 $lib = 'personnel';
 			
               		
-					$profile=$_SESSION["agence"];
+					$profile=$_SESSION["profil"];
 				
 				if($profile=="Administrateur"){
 				
@@ -42,8 +42,12 @@ else{
 $prof = findByNValue($table1,"annee='$annee' and personnel='$p1'");
 while($row = mysql_fetch_row($prof))
 				 	{
-						$p2=$row[1];
-						$b=$b.' '.$p2;
+						$idclasse=$row[1];
+						$t_classe = findByValue('classes','idclasse',$idclasse);
+						$val_classe = mysql_fetch_row($t_classe);
+						$classe=$val_classe[3];
+						
+						$b=$b.' '.$classe;
 						}
 						echo"<tr>
 							<td  align=center>".' '.$titre.' ' .$p4.' '.$p8."</td>

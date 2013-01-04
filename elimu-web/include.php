@@ -1,9 +1,12 @@
-<?php
-//header('Content-Type: text/html; charset=UTF-8');
-?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>ELIMU</title>
+<!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">td img {display: block;}</style>
+Fireworks CS3 Dreamweaver CS3 target.  Created Thu Dec 20 13:56:04 GMT+0000 (Maroc) 2012-->
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" /> 
 <script src="modernizr.js"></script>
@@ -123,6 +126,7 @@ plecran=window.open("pleinecran3.htm", "plecran", "height="+window.screen.availH
 }
 //-->
 </SCRIPT>
+
 </head>
 <?php
 require_once 'all_function.php';
@@ -144,7 +148,7 @@ while($ligne=mysql_fetch_array($req1))
 	$debut=$ligne['debut'];
 	$fin=$ligne['fin'];
 	}
-	if($libelle<>'' and $_SESSION["agence"]<>'Administrateur')
+	if(@$libelle<>'' and $_SESSION["profil"]<>'Administrateur')
 	$affi= "Nous Sommes au <B>".@$libelle." </B>  qui s'étale du  ".$debut." au " .$fin;
 ?>
 <center>
@@ -206,61 +210,54 @@ var initSlider = function() {
 };
 </script>
  
-  
-<!--The following section is an HTML table which reassembles the sliced image in a browser.-->
-<!--Copy the table section including the opening and closing table tags, and paste the data where-->
-<!--you want the reassembled image to appear in the destination document. -->
-<!--======================== BEGIN COPYING THE HTML HERE ==========================-->
-<table style="display: inline-table;" border="0" cellpadding="0" cellspacing="0" width="1150" valign=top>
+<table border="0" cellpadding="0" cellspacing="0" width="1350">
 <!-- fwtable fwsrc="maquette4.png" fwpage="page" fwbase="include.jpg" fwstyle="Dreamweaver" fwdocid = "1044080142" fwnested="0" -->
   <tr>
-<!-- Shim row, height 1. -->
    <td><img src="images/spacer.gif" width="350" height="1" border="0" alt="" /></td>
-   <td><img src="images/spacer.gif" width="694" height="1" border="0" alt="" /></td>
-   <td><img src="images/spacer.gif" width="106" height="1" border="0" alt="" /></td>
+   <td><img src="images/spacer.gif" width="891" height="1" border="0" alt="" /></td>
+   <td><img src="images/spacer.gif" width="109" height="1" border="0" alt="" /></td>
    <td><img src="images/spacer.gif" width="1" height="1" border="0" alt="" /></td>
   </tr>
 
-  <tr><!-- row 1 -->
-   <td colspan="2" background="images/include_r1_c1.jpg" width="1044" height="141" border="0" id="include_r1_c1" alt="" style="background-repeat:no-repeat" valign='top'/>  
-   
-   </td>
+  <tr>
+   <td colspan="2"  background="images/include_r1_c1.jpg" width="1241" height="108" border="0" id="include_r1_c1" alt="" style="background-repeat:no-repeat" valign='top'/></td>
    <td>
    <?php
                     	if($a <>""){
-						 echo" <img src='parametrage/logos/". $a."' width='106' height='141' border='0' title=".'Etablissement'.$c." >";
+						 echo" <img src='parametrage/logos/". $a."' width='109' height='108' border='0' title=".'Etablissement'.$c." >";
 						 }
 						 else{
                     	?>
-   <img name="include_r1_c3" src="images/include_r1_c3.jpg" width="106" height="141" border="0" id="include_r1_c3" alt="" / style="background-repeat:no-repeat" valign='top'>
-   <?php
+   
+   <img name="include_r1_c3" src="images/include_r1_c3.jpg" width="109" height="108" border="0" id="include_r1_c3" alt="" style="background-repeat:no-repeat" valign='top'  />
+    <?php
    }
    ?>
    </td>
-   <td><img src="images/spacer.gif" width="1" height="141" border="0" alt="" /></td>
+   <td><img src="images/spacer.gif" width="1" height="108" border="0" alt="" /></td>
   </tr>
-  <tr><!-- row 2 -->
-   <td colspan="3" background="images/include_r2_c1.jpg" width="1150" height="43" border="0" id="include_r2_c1" alt="" style="background-repeat:no-repeat" valign='top' align="left"/>
-     Bienvenue : <?php echo'<b>'.@$_SESSION["login1"].' Dans l\'espace '.@$_SESSION["agence"].'<b/>'?> - <a href="accueil.php?id=deconx">Sortir</a></br>
-	 <marquee><?php echo @$affi;?>
-   </td>
-   <td><img src="images/spacer.gif" width="1" height="43" border="0" alt="" /></td>
-  </tr>
-  <tr><!-- row 3 -->
-   <td colspan="3" background="images/include_r3_c1.jpg" width="1150" height="42" border="0" id="include_r3_c1" alt="" style="background-repeat:no-repeat" valign='top'align='right'/>
-    <?php echo smenu($p,$uno,$dos,$trois,$quatre,$cinq,$six) ;?>
+  <tr>
+   <td colspan="3" background="images/include_r2_c1.jpg" width="1350" height="42" border="0" id="include_r2_c1" alt="" style="background-repeat:no-repeat" valign='top' align="left"  />
+    Bienvenue : <?php echo'<b>'.@$_SESSION["login1"].' Dans l\'espace '.@$_SESSION["profil"].'<b/>'?> - <a href="accueil.php?id=deconx">Sortir</a></br>
+	 <marquee><?phpphp echo @$affi;?>
    </td>
    <td><img src="images/spacer.gif" width="1" height="42" border="0" alt="" /></td>
   </tr>
-  <tr><!-- row 4 -->
-   <td background="images/include_r4_c1.jpg" width="350" height="524" border="0" id="include_r4_c1" alt=""  style="background-repeat:no-repeat" valign='top'/>
-   <?php
+  <tr>
+   <td colspan="3" background="images/include_r3_c1.jpg" width="1350" height="42" border="0" id="include_r3_c1" alt=""  valign='top' align="right" />
+   <?php echo smenu($p,$uno,$dos,$trois,$quatre,$cinq,$six) ;?>
+   </td>
+   <td><img src="images/spacer.gif" width="1" height="42" border="0" alt="" /></td>
+  </tr>
+  <tr>
+   <td background="images/include_r4_c1.jpg" width="350" height="558" border="0" id="include_r4_c1" alt="" style="background-repeat:no-repeat" valign='top'/>
+    <?php
                      if(@$menu<>'')
                        include"menu/".$_SESSION["menu"];
                        ?>
    </td>
-   <td colspan="2" background="images/include_r4_c2.jpg" width="800" height="524" border="0" id="include_r4_c2" alt="" style="background-repeat:no-repeat" valign='top' />
-      <SPAN style="border:solid 1px black; background:lightsteelblue;padding-left:10px; width:95%; display:block;">  
+   <td colspan="2" background="images/include_r4_c2.jpg" width="1000" height="558" border="0" id="include_r4_c2" alt="" style="background-repeat:no-repeat" valign='top'/>
+      <SPAN style="border:solid 1px black; background:lightsteelblue;padding-left:10px; width:99%; display:block;">  
   <?php
  echo '<div align="left" class="good">'.@$titre.'</div>';
                           if(isset($sss)){
@@ -276,17 +273,17 @@ var initSlider = function() {
 
                           }
                           elseif(isset($pageint))
-                          include $pageint;
+                          include @$pageint;
 						// echo $menupage;
 						
                          ?>
 						     </SPAN>
+   
+   
    </td>
-   <td><img src="images/spacer.gif" width="1" height="524" border="0" alt="" /></td>
+   <td><img src="images/spacer.gif" width="1" height="558" border="0" alt="" /></td>
   </tr>
-<!--   This table was automatically created with Adobe Fireworks   -->
-<!--   http://www.adobe.com   -->
 </table>
-<!--========================= STOP COPYING THE HTML HERE =========================-->
 </body>
+</center>
 </html>

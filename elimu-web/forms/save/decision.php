@@ -41,7 +41,7 @@ placeholder="Selectionner" autofocus/ >
 	 <TD width="200" ROWSPAN=1 ALIGN=LEFT NOWRAP SIZE="2">Niveau Etude</TD>
 	 <table border=0 cellpadding=0 cellspacing=10 >
 	   <tr>       
-  <? $sqlstm2d="select  distinct libelle from etudes where cycle='MOYEN' or cycle='SECONDAIRE' ORDER BY libelle";
+  <?php $sqlstm2d="select  distinct libelle from etudes where cycle='MOYEN' or cycle='SECONDAIRE' ORDER BY libelle";
 $req2d=mysql_query($sqlstm2d);
 
 while($ligne2d=mysql_fetch_array($req2d))
@@ -52,10 +52,10 @@ $slib2d=$ligne2d['libelle'];
 
 ?>
 <td>
-<INPUT type="checkbox" name="choix[]" value="<?echo $slib2d;?>"> <?echo $slib2d;?>
+<INPUT type="checkbox" name="choix[]" value="<?php echo $slib2d;?>"> <?php echo $slib2d;?>
 </td>
 
-  <?
+  <?php
 }
 ?></tr>
  <tr>
@@ -78,6 +78,6 @@ $slib2d=$ligne2d['libelle'];
 
 </form>
 <?php
-save_honneur();
+save_decision();
 
 ?>

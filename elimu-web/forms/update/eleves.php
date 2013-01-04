@@ -49,7 +49,7 @@ if(verif == false){champ.value = champ.value.substr(0,x) + champ.value.substr(x+
 
 }
 </script>
-<form name="inscription_form" action="<?php echo 'eleves.php?mod=1&num='.$sclasse.'&eleve='.$eleve;?> "method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
+<form name="inscription_form" action="<?php echo lien();?> "method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 
@@ -65,8 +65,8 @@ echo'<img src="photos/'.$photo.'" align=center width="250" height="400">';
     <td><B>&nbsp;Matricule :&nbsp;&nbsp;&nbsp;</B><?php echo $matricule;?>
 <B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Eléve Redoublant :*</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <SELECT NAME="redoublant">
-<OPTION SELECTED><? echo $transport;?></OPTION>
-<?
+<OPTION SELECTED><?php echo $transport;?></OPTION>
+<?php
 if ($transport=="OUI"){
 
 	echo "<OPTION>NON</OPTION>";
@@ -81,18 +81,18 @@ echo "<OPTION>OUI</OPTION>";
 </SELECT></TD>
 </TD></td> 
   
-<tr><td><B>&nbsp;Prénom :*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B><INPUT type="text" SIZE=30 MAXLENGTH="50" NAME="prenom" ONCHANGE="this.value=this.value.toUpperCase()" value="<?php echo $prenom?>" required>
+<tr><td><B>&nbsp;Prénom :*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B><INPUT type="text" SIZE=30 MAXLENGTH="50" NAME="prenom" ONCHANGE="this.value=this.value.toUpperCase()" value="<?php echo $prenom;?>" required>
 </td></tr>
 <tr><td><B>&nbsp;Nom :*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B><INPUT  type="text" SIZE=30 MAXLENGTH="50" NAME="nom"  ONCHANGE="this.value=this.value.toUpperCase()" value="<?php echo $nom?>" required></td>    </tr>
 <tr><td><B>&nbsp;Date Naissance :*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B>
-<INPUT type="date" SIZE=10 MAXLENGTH="20" NAME="date_nais"  required value="<?php echo $date_nais?>"> <b>&nbsp;&nbsp;&nbsp;Age :&nbsp;&nbsp;&nbsp;<?php echo $age.' ans'?></b></td></tr>
+<INPUT type="date" SIZE=10 MAXLENGTH="20" NAME="date_nais"  required value="<?php echo $date_nais;?>"> <b>&nbsp;&nbsp;&nbsp;Age :&nbsp;&nbsp;&nbsp;<?php echo $age.' ans';?></b></td></tr>
 <tr><td>
 <B>&nbsp;Lieu Naissance :*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B>
-<INPUT  type="text" SIZE=30 MAXLENGTH="50" NAME="lieu_nais"  ONCHANGE="this.value=this.value.toUpperCase()" value="<?php echo $lieu_nais?>" required>
+<INPUT  type="text" SIZE=30 MAXLENGTH="50" NAME="lieu_nais"  ONCHANGE="this.value=this.value.toUpperCase()" value="<?php echo $lieu_nais;?>" required>
 </td></tr>
 <tr><td><B>&nbsp;Sexe :*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B>
 <SELECT NAME="sexe" id="Sexe" required><OPTION value="<?php echo $sexe?>"><?php echo $sx?></OPTION>
-<?
+<?php
 $table = 'sexe5';
 				 $selection = findNByValue('sexe5','id',$sexe);
 				while($ro=mysql_fetch_row($selection)){
@@ -123,9 +123,9 @@ $table = 'sexe5';
 <INPUT TYPE="text" SIZE=60 MAXLENGTH="100" NAME="adresse" id="adresse" ONCHANGE="this.value=this.value.toUpperCase()" required value="<?php echo $adresse?>"></td>    </tr>
 
 
-<tr><td><input type="hidden" name="eleve" value="<? echo $eleve;?>"></td>
-<td><input type="hidden" name="classe" value="<? echo $sclasse;?>"></td>
-<td><input type="hidden" name="lien" value="<? echo $photo;?>"></td>
+<tr><td><input type="hidden" name="eleve" value="<?php echo $eleve;?>"></td>
+<td><input type="hidden" name="classe" value="<?php echo $sclasse;?>"></td>
+<td><input type="hidden" name="lien" value="<?php echo $photo;?>"></td>
 	</tbody>
 <TR><TD class=petit>&nbsp;</TD></TR>
 	<tr><td><BUTTON TITLE="Confirmer la Modification de vos Données" TYPE="submit" id="flashit" name="modif">Modifier</BUTTON>

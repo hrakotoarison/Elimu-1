@@ -1,6 +1,6 @@
 <?php
-$classe=$_GET['num'];
-$eleve=$_GET['matricule'];
+$classe=securite_bdd($_GET['num']);
+$eleve=securite_bdd($_GET['matricule']);
 $annee=annee_academique();
 $sqlstmel="SELECT prenom8,nom8 FROM eleves WHERE matricule='$eleve'";
 $reqel=mysql_query($sqlstmel);
@@ -27,6 +27,17 @@ $sem1=mysql_fetch_array($reqelesem1);
 $reqelesem1=mysql_query($sqlstmelesem1);
 $sem1=mysql_fetch_array($reqelesem1);
 	$nb2=$sem1['cde'];
+// recup info établissement
+$req9=findByAll("etablissements");
+$ligne9=mysql_fetch_array($req9);
+	$eta=$ligne9['libelle'];
+	$ia=$ligne9['ia'];
+	$iden=$ligne9['iden'];
+	//connaitre le cycle de la classe de lélève
+	$sq="select cycle from etudes where libelle=(select etude from classes where libelle='".htmlentities($classe)."' ) ";
+$re=mysql_query($sq);
+$lig=mysql_fetch_array($re);
+	$cycle=$lig['cycle'];
  ?>
 
 <form name="inscription_form" action="<?php echo 'el_notes.php?matricule='.$eleve.'&num='.$classe;?>" method="post"onsubmit='return (conform(this));' >
@@ -53,10 +64,10 @@ placeholder="Selectionner" autofocus/  onchange="submit();" >
  }
 
   if(@$_POST["libelle1"]<>"") {
- $discipline=$_POST["libelle1"];
+ $choix_notes=$_POST["libelle1"];
   $nomfichier="impression/impression.txt";
       				
- if($discipline=="CARNET"){ 
+ if($choix_notes=="CARNET"){ 
  	touch($nomfichier);
         				$fichier = fopen($nomfichier, 'wb+');
  ?>
@@ -66,7 +77,7 @@ placeholder="Selectionner" autofocus/  onchange="submit();" >
 
 
 <TR>
-<TD align=center colspan=5 NOWRAP  ><B>&nbsp; Carnet de Notes de l'éléve <? echo $prenom.' '.$nom;?>&nbsp;</B></TD>
+<TD align=center colspan=5 NOWRAP  ><B>&nbsp; Carnet de Notes de l'éléve <?php echo $prenom.' '.$nom;?>&nbsp;</B></TD>
 </tr>
 <TR>
 <TH align=center ROWSPAN=1 NOWRAP><FONT COLOR="#5773AD"><B>&nbsp;Date Evaluation&nbsp;</B></FONT></TH>
@@ -76,7 +87,7 @@ placeholder="Selectionner" autofocus/  onchange="submit();" >
 <TH align=center ROWSPAN=1 NOWRAP><FONT COLOR="#5773AD"><B>&nbsp;Semestre&nbsp;</B></FONT></TH>
 </TR>
 
-<?
+<?php
 $sqlstm1="select id,date_format(date_prevue,'%d/%m/%Y') affi,discipline,type,semestre from evaluations where id in (select evaluation from notes where eleve='$eleve') and annee='$annee' and classe='".htmlentities($classe)."'
 order by discipline,semestre,type desc ,date_prevue  ";
 $req1=mysql_query($sqlstm1);
@@ -101,18 +112,18 @@ $li1=mysql_fetch_array($re1);
 $sqd="SELECT upper(libelle1) uplib FROM disciplines WHERE iddis='$dis'";
 $red=mysql_query($sqd);
 $lid=mysql_fetch_array($red);
-	$discipline=$lid['uplib'];
+	$discipline=UcFirstAndToLower(accents($lid['uplib']));
 
 ?>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP><?echo $date_af;?>&nbsp;</a></TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP><?php echo $date_af;?>&nbsp;</a></TD>
 
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo $discipline;?>&nbsp;</a></TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo $type;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo $note;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo $semestre;?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?php echo $discipline;?>&nbsp;</a></TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?php echo $type;?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?php echo $note;?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?php echo $semestre;?>&nbsp;</TD>
 </TR>
 
-<?
+<?php
 $b="$date_af;$discipline;$type;$note;$semestre;\r\n";
               				 fwrite($fichier,$b);
 }
@@ -122,12 +133,12 @@ $b="$date_af;$discipline;$type;$note;$semestre;\r\n";
 </TABLE>
 <div>&nbsp;&nbsp;&nbsp;</div>
 <div>          
-<a href="impression/impression.php?id=<?echo $classe;?>&dates=<?echo $annee;?>&eleve=<?echo $eleve;?>&page=<?echo 'CARNET';?>" target="_blank" class=imp>Apper&ccedil;u</a>
+<a href="impression/impression.php?id=<?php echo $classe;?>&dates=<?php echo $annee;?>&eleve=<?php echo $eleve;?>&page=<?php echo 'CARNET';?>" target="_blank" class=imp>Apper&ccedil;u</a>
 </div>
  <?php
  }
  //bulletin du premier semestre
- elseif($discipline=="BULLETINS1"){
+ elseif($choix_notes=="BULLETINS1"){
  	touch($nomfichier);
         				$fichier = fopen($nomfichier, 'wb+');
  $se="S1";
@@ -140,10 +151,10 @@ while($lignese=mysql_fetch_array($reqse))
 {
 	$semestre=$lignese['libelle'];
 	}
-	$exess1=mysql_query("select count(*) nb  from conduite where conduite.cycle =(select cycle from etudes where libelle=(select etude from classes where libelle='".htmlentities($classe)."' and annee='$annee'))");
-                 while ($roi1=mysql_fetch_array($exess1)) {
-				 $val=$roi1["nb"];
-				 }
+$exess1=findByNbreValue("conduite","cycle='$cycle'");
+$val=mysql_num_rows($exess1);
+				// $val=$roi1["nb"];
+				
 	//nbre absence
 	$sqseab="select count(eleve) nbre from cahier_absence where eleve='$eleve' and annee='$annee' and semestre='S1'";
 $reqseab=mysql_query($sqseab);
@@ -159,31 +170,15 @@ while($ligneseabr=mysql_fetch_array($reqseabr))
 	$retard=$ligneseabr['nbre'];
 	}
 
-?>
-<?
-$sqlstm9="select ia,iden,libelle from etablissements  ";
-$req9=mysql_query($sqlstm9);
-while($ligne9=mysql_fetch_array($req9))
-{
-	$eta=$ligne9['libelle'];
-	$ia=$ligne9['ia'];
-	$iden=$ligne9['iden'];
-	}
-	
-	$sq="select cycle from categories where  categories.cycle=(select cycle from etudes where libelle=(select etude from classes where libelle='".htmlentities($classe)."' )) ";
-$re=mysql_query($sq);
-while($lig=mysql_fetch_array($re))
-{
-	$cycle=$lig['cycle'];
-	}
+
+
 		$sqe="select count(eleve) nbrel from inscription where classe='".htmlentities($classe)."' and annee='$annee'  ";
 $ree=mysql_query($sqe);
 while($lige=mysql_fetch_array($ree))
 {
 	$nombreel=$lige['nbrel'];
 	}
-?>
-<?
+
 $sqlstmel="SELECT prenom8,nom8,date_format(date_nais8,'%d/%m/%Y') dtn,lieu_nais8 FROM eleves WHERE matricule='$eleve'";
 $reqel=mysql_query($sqlstmel);
 while($ligneel=mysql_fetch_array($reqel))
@@ -204,28 +199,28 @@ $redoublant=$ligne1['redoublant'];
 <table cellspacing="0" bordercolor="#AEBFE2" cellpadding="2" width=100% ALIGN=center border="0">
 <tr><TD class=petit>&nbsp;</TD></tr>
 <TR align=center>
-<TD align=center><b><? echo'MINISTERE DE L\'EDUCATION NATIONALE';?></b></TD>
+<TD ROWSPAN=1  ALIGN=LEFT NOWRAP><b><?php echo'MINISTERE DE L\'EDUCATION NATIONALE';?></b></TD>
 </tr>
 <tr><TD class=petit>&nbsp;</TD></tr>
 <TR>
-<TD><b><? echo'IA : '. $ia;?></b></TD><TD><b><? echo'IDEN : '. $iden;?></b></TD>
+<TD ROWSPAN=1  ALIGN=LEFT NOWRAP><b><?php echo'IA : '. $ia;?></b></TD><TD ROWSPAN=1  ALIGN=LEFT NOWRAP><b><?php echo'IEF : '. $iden;?></b></TD>
 </tr>
 <tr><TD class=petit>&nbsp;</TD></tr>
 <TR>
-<TD><b><? echo 'ETABLISSEMENT : '.$eta;?></b></TD>
-<TD><b><? echo 'Cycle : '.$cycle;?></b></TD>
+<TD ROWSPAN=1  ALIGN=LEFT NOWRAP><b><?php echo 'ETABLISSEMENT : '.$eta;?></b></TD>
+<TD ROWSPAN=1  ALIGN=LEFT NOWRAP><b><?php echo 'Cycle : '.$cycle;?></b></TD>
 </tr>
 <tr><TD class=petit>&nbsp;</TD></tr>
 <tr>
 
-<TD colspan=30><b>&nbsp;BULLETIN DE NOTES DU <?echo $semestre." DE L'ANNEE ACADEMIQUE ".$annee?></b></TD>
+<TD colspan=30><b>&nbsp;BULLETIN DE NOTES DU <?php echo $semestre." DE L'ANNEE ACADEMIQUE ".$annee?></b></TD>
 </tr><tr>
 <TD class=petit>&nbsp;</TD>
 </TR>
 <!--
 <TR>
 
-<TD><b><? echo $cycle;?></b></TD>
+<TD><b><?php echo $cycle;?></b></TD>
 
 <TD class=petit>&nbsp;</TD>
 <TD class=petit>&nbsp;</TD>
@@ -233,12 +228,13 @@ $redoublant=$ligne1['redoublant'];
 </TR>!-->
 
 <TR>
-<TD colspan=1>&nbsp;Prénom:<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<? echo $prenom?></b></TD><TD  colspan=5>&nbsp;Nom:<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<? echo $nom?></b></TD>
+<TD  ROWSPAN=1  ALIGN=LEFT NOWRAP colspan=1>&nbsp;Prénom:<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $prenom?></b></TD>
+<TD ROWSPAN=1  ALIGN=LEFT NOWRAP colspan=5>&nbsp;Nom:<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $nom?></b></TD>
 
 
 </TR>
 
-<TD  colspan=20>&nbsp;Date et lieu de Naissance:<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<? echo $date_n.' à '.$lieu?></b></TD>
+<TD ROWSPAN=1  ALIGN=LEFT NOWRAP colspan=20>&nbsp;Date et lieu de Naissance:<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $date_n.' à '.accents($lieu);?></b></TD>
 <TD class=petit>&nbsp;</TD>
 <TD class=petit>&nbsp;</TD>
 <TD class=petit>&nbsp;</TD>
@@ -246,15 +242,15 @@ $redoublant=$ligne1['redoublant'];
 </tr>
 
 <TR>
-<TD>&nbsp;Classe:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><? echo $classe?></b></TD>
-<TD>&nbsp;Effectif :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b><? echo $nombreel;?></b></TD>
+<TD ROWSPAN=1  ALIGN=LEFT NOWRAP>&nbsp;Classe:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $classe?></b></TD>
+<TD ROWSPAN=1  ALIGN=LEFT NOWRAP>&nbsp;Effectif :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b><?php echo $nombreel;?></b></TD>
 
 <TD class=petit>&nbsp;</TD></tr>
 
 <TR>
-<TD>&nbsp;Nbre Absence:&nbsp;&nbsp;&nbsp;<b><? echo $absence?></b></TD>
-<TD>&nbsp;Nbre Retard:&nbsp;&nbsp;&nbsp;<b><? echo $retard?></b></TD>
-<TD>&nbsp;Redoublant :&nbsp;&nbsp;&nbsp;<b><? echo $redoublant;?></b></TD>
+<TD ROWSPAN=1  ALIGN=LEFT NOWRAP>&nbsp;Nbre Absence:&nbsp;&nbsp;&nbsp;<b><?php echo $absence?></b></TD>
+<TD ROWSPAN=1  ALIGN=LEFT NOWRAP>&nbsp;Nbre Retard:&nbsp;&nbsp;&nbsp;<b><?php echo $retard?></b></TD>
+<TD ROWSPAN=1  ALIGN=LEFT NOWRAP>&nbsp;Redoublant :&nbsp;&nbsp;&nbsp;<b><?php echo $redoublant;?></b></TD>
 
 </TR>
 <tr>
@@ -274,15 +270,18 @@ $redoublant=$ligne1['redoublant'];
 <TH align=center ROWSPAN=1 NOWRAP><FONT COLOR="black"><B>&nbsp;Appréciations&nbsp;</B></FONT></TH>
 </TR>
 <TR>
-<?
+<?php
 $nc=0;
 $div1=1;
-$sqlstm1="SELECT discipline,coef FROM coefficients WHERE coefficients.etude=(select etude from classes where libelle='".htmlentities($classe)."' )";
-$req1=mysql_query($sqlstm1);
-while($ligne=mysql_fetch_array($req1))
+//connaitre  coef,uv suivant la classe de l'élève en question 
+$sqlstmcoef="SELECT discipline,coef FROM coefficients WHERE coefficients.etude=(select etude from classes where libelle='".htmlentities($classe)."' )";
+$reqcoef=findByNValue("coefficients","coefficients.etude=(select etude from classes where libelle='".htmlentities($classe)."' )");
+
+//mysql_query($sqlstmcoef);
+while($lignecoef=mysql_fetch_array($reqcoef))
 {
-$discipline=$ligne['discipline'];
-$coef=$ligne['coef'];
+$discipline=$lignecoef['discipline'];
+$coef=$lignecoef['coef'];
 $soc=$soc+$coef;
 
 $sqlstm1ds="SELECT upper(libelle1) uplib FROM disciplines WHERE iddis='$discipline'";
@@ -291,9 +290,9 @@ $ligneds=mysql_fetch_array($req1ds);
 $dis=$ligneds['uplib'];
 
 ?>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo strtoupper($dis);?>&nbsp;</A></TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?php echo UcFirstAndToLower(accents($dis));?>&nbsp;</A></TD>
 
-<?
+<?php
 //total devoir + moyenne devoir
 $s="SELECT count(discipline) dv,sum(note) nt,round(sum(note)/count(discipline),3) md FROM evaluations,notes WHERE evaluations.id=notes.evaluation and evaluations.classe='".htmlentities($classe)."' and evaluations.annee='$annee'and
  evaluations.type='DEVOIR' and evaluations.semestre='$se' and evaluations.discipline='$discipline' and notes.eleve='$eleve'";
@@ -321,10 +320,11 @@ $ms=($md+$nc)/2;
 $tp=$ms*$coef;
 $son=$son+$tp;
 //gestion remarque
-$sqere="select distinct libelle1   from remarques where mini<='$ms' and maxi>'$ms' ";
+$sqere="select libelle   from apreciation_prof where eleve='$eleve' and semestre='$se' and discipline='$discipline'
+and annee='$annee' ";
 $reere=mysql_query($sqere);
 $ligere=mysql_fetch_array($reere);
-	$rem=$ligere['libelle1'];
+	$rem=$ligere['libelle'];
 //gestion appréciation	
 $sqeap="select libelle1   from apreciations where mini<='$ms' and maxi>'$ms' ";
 $reeap=mysql_query($sqeap);
@@ -333,32 +333,32 @@ $ligeap=mysql_fetch_array($reeap);
 
 ?>
 
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo $md;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo $nc;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo $ms;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo $coef;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo $tp;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo $rem;?>&nbsp;</TD> 
+<TD ALIGN=center ROWSPAN=1 NOWRAP>&nbsp;<?php echo $md;?>&nbsp;</TD>
+<TD ALIGN=center ROWSPAN=1 NOWRAP>&nbsp;<?php echo $nc;?>&nbsp;</TD>
+<TD ALIGN=center ROWSPAN=1 NOWRAP>&nbsp;<?php echo $ms;?>&nbsp;</TD>
+<TD ALIGN=center ROWSPAN=1 NOWRAP>&nbsp;<?php echo $coef;?>&nbsp;</TD>
+<TD ALIGN=center ROWSPAN=1 NOWRAP>&nbsp;<?php echo $tp;?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?php echo accents($rem);?>&nbsp;</TD> 
 </TR>
-<?
+<?php
 $b="$dis;$md;$nc;$ms;$coef;$tp;$rem;\r\n";
               				 fwrite($fichier,$b);
 }
 if($val<>0){
-$sct="SELECT note FROM note_conduite WHERE annee='$annee'and semestre='$se'and eleve='$eleve'";
+$sct="SELECT sum(note),count(personnel),round(sum(note)/count(personnel),3) nt FROM note_conduite WHERE annee='$annee'and semestre='$se'and eleve='$eleve'";
 $rct=mysql_query($sct);
 $lct=mysql_fetch_array($rct);
-$conduite=$lct['note'];
+$conduite=$lct['nt'];
 ?><TR>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo 'CONDUITE';?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo '';?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo '';?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo $conduite;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo 1;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo $conduite;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo '';?>&nbsp;</TD> 
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?phpecho 'CONDUITE';?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?phpecho '';?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?phpecho '';?>&nbsp;</TD>
+<TD ALIGN=center ROWSPAN=1 NOWRAP>&nbsp;<?phpecho $conduite;?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?phpecho 1;?>&nbsp;</TD>
+<TD ALIGN=center ROWSPAN=1 NOWRAP>&nbsp;<?phpecho $conduite;?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?phpecho '';?>&nbsp;</TD> 
 </TR>
-<?
+<?php
 $tpoint=$son+$conduite;
 $tcoef=$soc+1;
 $b="CONDUITE;;;$conduite;1;$conduite;;\r\n";
@@ -376,6 +376,8 @@ while($rang=mysql_fetch_array($reqserang))
 	$rg=$rang['nbre']+1;
 	}
 $place=$rg.'éme/ '.$nombreel.' Eléves';
+$b=";;;;;;;\r\n";
+ fwrite($fichier,$b);
 	$b="Total;;;;$tcoef;$tpoint;;\r\n";
               				 fwrite($fichier,$b);
 	
@@ -383,68 +385,62 @@ $b="Moyenne Semestrielle;;;;;$fi;;\r\n";
               				 fwrite($fichier,$b);	
  $b=";;;;;RANG;$place;\r\n";
               				 fwrite($fichier,$b);
-							   fclose($fichier);
+							 //  fclose($fichier);
 ?>
 <TR >
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<big><?echo "Total ";?>&nbsp;</A></TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<big><?php echo "Total ";?>&nbsp;</A></TD>
 
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo ;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo ;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo ;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<big><?echo $tcoef;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<big><?echo $tpoint;?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?php echo '' ;?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?php echo'' ;?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<?php echo'' ;?>&nbsp;</TD>
+<TD ALIGN=center ROWSPAN=1 NOWRAP>&nbsp;<big><?php echo $tcoef;?>&nbsp;</TD>
+<TD ALIGN=center ROWSPAN=1 NOWRAP>&nbsp;<big><?php echo $tpoint;?>&nbsp;</TD>
 </TR>
 <TR >
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<big><?echo "Moyenne Semestrielle ";?>&nbsp;</A></TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo ;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo ;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo ;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<big><?echo ;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<big><?echo $fi;?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<big><?php echo "Moyenne Semestrielle ";?>&nbsp;</A></TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<big><?php echo '';?>&nbsp;</TD>
+<TD ALIGN=center ROWSPAN=1 NOWRAP>&nbsp;<big><?php echo $fi;?>&nbsp;</TD>
 </TR>
 <TR >
 
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo ;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo ;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo ;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<?echo ;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<big><?echo ;?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<big><?echo "RANG ";?>&nbsp;</TD>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP>&nbsp;<big><?echo $rg.'éme/ '.$nombreel.' Eléves';?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<big><?php echo '';?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<big><?php echo "RANG ";?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP>&nbsp;<big><?php echo $rg.'éme/ '.$nombreel.' Eléves';?>&nbsp;</TD>
 </TR>
 <TR >
-<?
-
+<?php
+$b=";;;;;;;\r\n";
+ fwrite($fichier,$b);
 $sqere="select libelle1   from honneurs where mini<='$fi' and maxi>'$fi' ";
 $reere=mysql_query($sqere);
 while($ligere=mysql_fetch_array($reere)){
 	$ho=$ligere['libelle1'];
 	
+$b="$ho;;;;;;;\r\n";
+              				 fwrite($fichier,$b);
 
-/*if(mysql_num_rows($r)==0 ){
-echo'<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP >0</TD>';
-echo'<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP >0</TD>';
-//echo'<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP >-</TD>';
-}//$svent=$svent+@$nombre;
-else{*/
-
-echo'
-
-
-<TD ALIGN=MIDDLE ROWSPAN=1 colspan=2 NOWRAP>&nbsp;<b><big>'. $ho.'</big&nbsp;</A></TD>';
-
-
+echo'<TD ALIGN=left ROWSPAN=1 colspan=2 NOWRAP>&nbsp;<b><big>'. $ho.'</big&nbsp;</A></TD>';
 }
+$b=";;;;;;;\r\n";
+ fwrite($fichier,$b);
+//fclose($fichier);
 ?>
 </TR>
 <tr>
 
-<td colspan=7>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?echo  ;?>&nbsp;
+<td colspan=7>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?phpecho  ;?>&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
-	<?
-$sqlstm1rq="SELECT libelle1,mini,maxi FROM apreciations ";
+	<?php
+$sqlstm1rq="SELECT libelle1,mini,maxi FROM remarques ";
 $req1rq=mysql_query($sqlstm1rq);
 while($lignerq=mysql_fetch_array($req1rq))
 {
@@ -453,37 +449,40 @@ while($lignerq=mysql_fetch_array($req1rq))
 	$debutrq=$lignerq['mini'];
 	$finrq=$lignerq['maxi'];
 ?>
-<td align=center ROWSPAN=1 NOWRAP>&nbsp;<?echo $libellerq?>&nbsp;</FONT></TD>
+<td align=center ROWSPAN=1 NOWRAP>&nbsp;<?php echo $libellerq?>&nbsp;</FONT></TD>
 
-<?
-$sqlstm11000="select libelle1 quant from apreciations where  mini<='$fi' and maxi>'$fi' and libelle1='$libellerq'";
+<?php
+$val="X";
+$sqlstm11000="select libelle1 quant from remarques where  mini<='$fi' and maxi>'$fi' and libelle1='$libellerq'";
 $req10mu141000=mysql_query($sqlstm11000);
 $ligne10u141000=mysql_fetch_array($req10mu141000);
 $nombre1000=$ligne10u141000['quant'];
 if(mysql_num_rows($req10mu141000)==0){
-echo'<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP >-</TD>';
+$val="-";
 }
-else{
 ?>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP ><B><big>&nbsp;<?echo "X";?>&nbsp;</TD>
+<TD ALIGN=left ROWSPAN=1 NOWRAP ><B><big>&nbsp;<?php echo $val;?>&nbsp;</TD>
 
-<?
-}
+<?php
+//}
+
 echo"</tr>";
-}
+$b="$libellerq;$val;;;;;;\r\n";
+ fwrite($fichier,$b);
+
+}fclose($fichier);
 ?>
 
 </TR>
 </table>
 <div>          
-<a href="impression/impression.php?id=<?echo $classe;?>&dates=<?echo $annee;?>&eleve=<?echo $eleve;?>&page=<?echo 'BULLETINS1';?>" target="_blank" class=imp>Apper&ccedil;u</a>
+<a href="impression/impression.php?id=<?php echo $classe;?>&dates=<?php echo $annee;?>&eleve=<?php echo $eleve;?>&page=<?php echo 'BULLETINS1';?>" target="_blank" class=imp>Apper&ccedil;u</a>
 </div>
  
  <?php
  }
  elseif($discipline=="BULLETINS2"){
- ?>
- <?php
+ 
  }
 }
 ?>

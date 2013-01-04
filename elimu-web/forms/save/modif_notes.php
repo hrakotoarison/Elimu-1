@@ -101,7 +101,7 @@ else{
 		<TR>
 <B>&nbsp;Evaluation &nbsp;*&nbsp;</B><SELECT NAME="evaluation" id="evaluation" required onchange="go()">
 <OPTION value=""></OPTION>
- <?
+ <?php
 $sql1="select distinct evaluation from notes where notes.eleve in(select eleve from inscription where  classe='".htmlentities($sclasse)."' and annee='$annee')and evaluation in(select id from evaluations where annee='$annee' and classe='".htmlentities($sclasse)."' and 
 evaluations.discipline in(select discipline from enseigner where personnel='$personnel' and annee='$annee' and classe='".htmlentities($sclasse)."' )) order by evaluation desc";
 $req1=mysql_query($sql1);
@@ -123,8 +123,8 @@ $table = 'disciplines';
                             //echo"<option value='".$ro[0]."'>".$ro[1]."</option>";
     			
 ?>
-  <OPTION value="<?echo $eva;?>"><?echo $type.' de '.$ro[1].' du '.$datep;?>
-  <?
+  <OPTION value="<?php echo $eva;?>"><?php echo $type.' de '.$ro[1].' du '.$datep;?>
+  <?php
 }
 ?>
  </OPTION></SELECT></TD></TR>
