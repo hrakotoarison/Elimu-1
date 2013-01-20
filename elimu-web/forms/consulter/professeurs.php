@@ -10,8 +10,7 @@ $annee=annee_academique();
 	 $sql="select * from $table    limit $compt,".($long);
 	else
 	 $sql="select * from $table   limit ".($long+$long*($compt-1)).",".($long);
-	//}
-	 //echo"<br>".$sql;
+	
     return $sql;
 
 }

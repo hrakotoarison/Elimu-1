@@ -4,7 +4,6 @@
   				 <tr bgcolor="white">
                     <th width="350"> Disciplines</th>
 					   <th width="300"> Cycle</th>
-  				 	<!--<th width="150">Niveau Etude</th>!-->
                 </tr>
 				<tbody><tr>
 				<?php

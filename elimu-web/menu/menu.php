@@ -200,7 +200,7 @@ echo'
 <li><a href="echelons.php" class="smenu">Ges des Echelons</a></li>
 <li><a href="grades.php" class="smenu">Ges des Grades</a></li>
 <li><a href="personnels.php" class="smenu">Ges Personnel</a></li>
-</ul>
+</ul></li>
 <?php
 //}
 if($li<> 0)	{
@@ -211,7 +211,7 @@ if($li<> 0)	{
 <li><a href="honneurs.php" class="smenu">Ges des Honneurs</a></li>
 <li><a href="remarques.php" class="smenu">Ges Remarques</a></li>
 <li><a href="decision.php" class="smenu">Décision Conseil</a></li>
-</ul>
+</ul></li>
 <?php
 }
 ?>

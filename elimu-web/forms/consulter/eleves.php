@@ -1,7 +1,7 @@
 <?php 
-$sclasse=$_GET['num'];
+$sclasse=securite_bdd($_GET['num']);
 $annee=annee_academique();
-$selection =findByNbreValue("inscription","classe='".htmlentities($sclasse)."' and annee='$annee'");
+$selection =findByNbreValue("inscription","classe='$sclasse' and annee='$annee'");
 $el = mysql_fetch_row($selection);
 $nbre_eleve=$el[0];
 	$nomfichier="impression/impression.txt";
@@ -14,7 +14,7 @@ $nbre_eleve=$el[0];
 
 
 <div align=left><B>&nbsp;Effectif de la classe : <?php echo @$nbre_eleve;?>&nbsp;</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="impression/impression.php?id=<?phpphp echo $sclasse;?>&dates=<?phpphp echo $annee;?>&page=<?phpphp echo 'ELEVE';?>" target="_blank" > Liste Alphabétique des Eléves</a>
+<a href="impression/impression.php?id=<?php echo $sclasse;?>&dates=<?php echo $annee;?>&page=<?php echo 'ELEVE';?>" target="_blank" > Liste Alphabétique des Eléves</a>
 </div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
   				 <tr bgcolor="white">
@@ -28,7 +28,7 @@ $nbre_eleve=$el[0];
 				<tbody><tr>
 				<?php
 			
-              		$selection =  findByNValue("eleves","matricule in(select eleve from inscription where classe='".htmlentities($sclasse)."' and annee='$annee')");
+              		$selection =  findByNValue("eleves","matricule in(select eleve from inscription where classe='$sclasse' and annee='$annee')");
               		while($row1 = mysql_fetch_row($selection))
 				 	{
                        	$p1=$row1[0];
@@ -50,12 +50,12 @@ $nbre_eleve=$el[0];
 							<td  align=center>$date_nais".' à '. $lieu_nais."</td>
 							";
 										
-						echo"
-							<td  align=center>$tuteur</td>
-							<td  align=left>Adresse :".$adresse."</br> Tél :".$tel_t."</br>E-mail :".$email_t."</td>
-							<td  align=center>$tel_e</td>
+						echo'
+							<td  align=center>'.$tuteur.'</td>
+							<td  align=left>Adresse :'.$adresse.'</br> Tél :<a href="smstuteur.php?id='. $sclasse.'&dates='.$annee.'" target="_blank" title="Envoyer un SMS">'.$tel_t.'</a></br>E-mail :<a href="emailtuteur.php?id='. $sclasse.'&dates='.$annee.'" target="_blank" title="Envoyer un Email au tuteur">'.$email_t.'</td>
+							<td  align=center>'.$tel_e.'</td>
 							
-							</tr>";/**/
+							</tr>';/**/
         			$b="$prenom;$nom;$dlnais;\r\n";
               				 fwrite($fichier,$b);
 }

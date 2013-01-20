@@ -1,6 +1,6 @@
 
 <?php
-$numero=@$_GET['upd'];
+$numero=@securite_bdd($_GET['upd']);
 if($numero==""){
 affichedos("coefficients","","idcoef ","?mod=1",3,"mod");
 }
@@ -32,7 +32,7 @@ if(verif == false){champ.value = champ.value.substr(0,x) + champ.value.substr(x+
 
 }
 </script>
-<form name="inscription_form" action=<?phpphp echo '"coefs.php?mod=1&upd='.$_GET['upd'].'"';?> method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
+<form name="inscription_form" action=<?phpecho lien();?> method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 <table border="0" cellpadding="3" cellspacing="0" width="100%" align=center >

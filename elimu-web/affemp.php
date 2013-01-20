@@ -9,9 +9,7 @@ $code=securite_bdd($_POST['SEMESTRE_ID']);
 $sclasse=securite_bdd(accents($_POST['PROF_ID']));
 $annee=annee_academique();
 $nb=0;
-$nomfichier="impression/impression.txt";
-      					touch($nomfichier);
-        				$fichier = fopen($nomfichier, 'wb+');
+
 echo'
    <table border="1" cellspacing="0" bordercolor="#033155" cellpadding="2" bgcolor="#EFF2FB" width=100 ALIGN=LEFT>
 <TR>
@@ -78,14 +76,12 @@ $cours= $discipline.'<br/>'.$salle;
 echo'
 <TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP ><A HREF="emplois_classes.php?sup=1'.'&j='. $jour.'&hd='. $debut.'&hf='.$fin.'&num='. $sclasse.'&se='. $code.'"><FONT color= "black" >&nbsp;'. UcFirstAndToLower($discipline).'<br/>'.$salle.'&nbsp;</TD>';
 }
- $b="$horaire;$cours;$cours;$cours;$cours;$cours;$cours;\r\n";
-		                    fwrite($fichier,$b);
-							
+					
 }
 
 echo"</tr>";
 }
-fclose($fichier);
+
 echo'</table>';
 ?>
 <div>          

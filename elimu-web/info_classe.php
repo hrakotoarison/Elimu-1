@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'all_function.php';
-$menu=$_SESSION["menu"];
+@$menu=$_SESSION["menu"];
 $_SESSION["classe"]=$_GET['num'];
 $code=$_SESSION["classe"];
 $etag1 = findByValue('classes','idclasse',$code);

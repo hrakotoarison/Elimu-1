@@ -11,21 +11,23 @@ if(@$_POST["Statut5"]=="Administrateur"){
 $rsl=verif_connexion("administrateurs","connex_reussie.php");
 $etr=explode("/",$rsl);
 	if ($etr[0]=="error") {
-	echo'<SCRIPT LANGUAGE="JavaScript">
+	/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="accueil.php?idr=fff"
-</SCRIPT>';
+</SCRIPT>';*/
+ header("location: accueil.php?idr=fff");
 	}
 	else {
 	$row=explode(";",$etr[1]);
 	$_SESSION["login1"]=$row[1];
 	$_SESSION["menu"]="menu.php";
 	$_SESSION["profil"]=$profil;
-	 echo'<SCRIPT LANGUAGE="JavaScript">
+	header("location: connex_reussie.php");
+	 /*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="connex_reussie.php"
-</SCRIPT>';
+</SCRIPT>';*/
 	}
 }
-else{
+elseif(@$_POST["Statut5"]<>"Administrateur"){
 //récupération des infos des users autre que l'administrateur
 $info_perso=user_connect($_POST['Login1'],$_POST['Statut5']);
 $perso= explode("*", $info_perso);
@@ -40,14 +42,16 @@ $_SESSION["matricule"]=$matricule;
 	$_SESSION["login1"]=$login;
 	$_SESSION["profil"]=$profil;
 	if($nbre==0 or $datejour >= $ladate) {
-	echo'<SCRIPT LANGUAGE="JavaScript">
+	/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="perso.php"
-</SCRIPT>';
+</SCRIPT>';*/
+header("location: perso.php");
 }
 else{
-echo'<SCRIPT LANGUAGE="JavaScript">
+header("location: connex_reussie.php");
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="connex_reussie.php"
-</SCRIPT>';
+</SCRIPT>';*/
 	}
 if (($profil=='CENSEUR') or($profil=='PRINCIPAL'))
 {	
@@ -69,17 +73,26 @@ elseif ($profil=='PROFESSEUR')
 		$_SESSION["menu"]="menu4.php";
 	}
 	else
-	{	
-	echo'<SCRIPT LANGUAGE="JavaScript">
+	{
+header("location: accueil.php?idr=fff");	
+	/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="accueil.php?idr=fff"
-</SCRIPT>';
+</SCRIPT>';*/
+}
+}
+else
+	{
+header("location: accueil.php?idr=fff");	
+	/*echo'<SCRIPT LANGUAGE="JavaScript">
+location.href="accueil.php?idr=fff"
+</SCRIPT>';*/
 }
 }
 else
 	{	
-	echo'<SCRIPT LANGUAGE="JavaScript">
-location.href="accueil.php?idr=fff"
-</SCRIPT>';
-}
+	/*echo'<SCRIPT LANGUAGE="JavaScript">
+location.href="index.php"
+</SCRIPT>';*/
+header("location: index.php");
 }
 ?>

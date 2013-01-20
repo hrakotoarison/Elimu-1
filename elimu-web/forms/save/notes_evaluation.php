@@ -1,6 +1,6 @@
 <?php
 //$_SESSION['classe']=;
-$sclasse=$_GET['num'];
+$sclasse=securite_bdd($_GET['num']);
 $personnel=$_SESSION['matricule'];
 $annee=annee_academique();
 $type='';
@@ -30,6 +30,9 @@ $type=$ligne['type'];
 $hd=$ligne['hd'];
 $hf=$ligne['hf'];
 }
+ $sqlst="select id,date_prevue,discipline,type from evaluations where  classe='$sclasse' and annee='$annee' and semestre='$codes' and id not in (select evaluation from notes) and 
+evaluations.discipline in( select discipline from enseigner where personnel='$personnel') order by type ,date_prevue desc ";
+$req=mysql_query($sqlst);
 ?>
 <script language="Javascript">
 function verif_nombre(champ)
@@ -49,26 +52,17 @@ if(verif == false){champ.value = champ.value.substr(0,x) + champ.value.substr(x+
 }
 </script>
 
-<form name="inscription_form" action="<?php echo 'notes_evaluation.php?ajout=1&num='.$sclasse;?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
+<form name="inscription_form" action="<?php echo lien();?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 <table border="0" cellpadding="3" cellspacing="0" width="100%" align=letf >
 		<tbody>
 		<TR><TD class=petit>&nbsp;</TD></TR>
-		<?php
-		if($ns==0){
-echo $datejour .' n\'est dans  aucun semestre donc impossible de faire un traitement  pour cette date';
-}
-
-else{
-?>
-		<TR>
+			<TR>
 <B>&nbsp;Evaluation &nbsp;*&nbsp;</B><SELECT NAME="evaluation" id="evaluation" required>
 <OPTION value=""></OPTION>
  <?php
-$sqlst="select id,date_prevue,discipline,type from evaluations where  classe='".htmlentities($sclasse)."' and annee='$annee' and semestre='$codes' and id not in (select evaluation from notes) and 
-evaluations.discipline in( select discipline from enseigner where personnel='$personnel') order by type ,date_prevue desc ";
-$req=mysql_query($sqlst);
+
 while($lig=mysql_fetch_array($req))
 {
 $id=$lig['id'];
@@ -81,7 +75,7 @@ $table = 'disciplines';
                             //echo"<option value='".$ro[0]."'>".$ro[1]."</option>";
     			
 ?>
-  <OPTION value="<?phpecho $id;?>"><?phpecho $type.' de '.$ro[1].' du '.$datep;?>
+  <OPTION value="<?php echo $id;?>"><?php echo $type.' de '.$ro[1].' du '.$datep;?>
   <?php
 }
 ?>
@@ -97,7 +91,7 @@ $table = 'disciplines';
                      </tr>
                 <?php
                   //include"connect.php";
-                  $sql="select * from eleves where matricule in(  select eleve from inscription where classe='".htmlentities($sclasse)."' and annee='$annee')";
+                  $sql="select * from eleves where matricule in(  select eleve from inscription where classe='$sclasse' and annee='$annee')";
                   $exec=mysql_query($sql) or die(mysql_error());
                   $nb=mysql_num_rows($exec);
                   $i=1;
@@ -114,7 +108,7 @@ $table = 'disciplines';
 			            <td align=center>$prenom $nom</td>
 							<td align=center>$date_n à $lieu</td>
 							<td  align=center>
-			            		  <input size=9 name=note$i type=text id='Note Eléve'  onkeyup='verif_nombre(this);' lang='bonfond:#FFFFFF;bontexte:#400040; erreurfond:#FF0000;bontexte:#0000FF;type:obligatoire2;erreur: CV obligatoire'>
+			            		  <input size=9 name=note$i type=text id='Note Eléve' onkeyup='verif_nombre(this);' lang='bonfond:#FFFFFF;bontexte:#400040; erreurfond:#FF0000;bontexte:#0000FF;type:obligatoire2;erreur: CV obligatoire'>
 			            	 <script type=text/javascript>      //
 				                 			new SUC( document.frm.nbptotal$i );       //
 				             	      </script>
@@ -209,5 +203,5 @@ location.href="notes_evaluation.php?ajout=1&num='.$classe.'"
 	}
 }
 //}
-}
+//}
 ?>

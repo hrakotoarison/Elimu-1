@@ -1,6 +1,6 @@
 <?php
 //$_SESSION['classe']=;
-$sclasse=$_GET['num'];
+$sclasse=securite_bdd($_GET['num']);
 $personnel=$_SESSION['matricule'];
 $annee=annee_academique();
 $type='';
@@ -13,7 +13,10 @@ while($lignee=mysql_fetch_array($req1e))
 {
 	$ns=$lignee['ns'];
 	}
-
+	// récupération des évaluations déja enregistrées
+$sql1="select distinct evaluation from notes where notes.eleve in(select eleve from inscription where  classe='$sclasse' and annee='$annee')and evaluation in(select id from evaluations where annee='$annee' and classe='$sclasse' and 
+evaluations.discipline in(select discipline from enseigner where personnel='$personnel' and annee='$annee' and classe='$sclasse' )) order by evaluation desc";
+$req1=mysql_query($sql1);
 ?>
 <script language="Javascript">
 function verif_nombre(champ)
@@ -33,7 +36,7 @@ if(verif == false){champ.value = champ.value.substr(0,x) + champ.value.substr(x+
 }
 </script>
 
-<form name="inscription_form" action="<?php echo 'modif_notes.php?ajout=1&num='.$sclasse;?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
+<form name="inscription_form" action="<?php echo lien();?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 	<script language="Javascript">
@@ -91,20 +94,11 @@ function go(){
 <table border="0" cellpadding="3" cellspacing="0" width="100%" align=letf >
 		<tbody>
 		<TR><TD class=petit>&nbsp;</TD></TR>
-		<?php
-		if($ns==0){
-echo $datejour .' n\'est dans  aucun semestre donc impossible de faire un traitement  pour cette date';
-}
-
-else{
-?>
 		<TR>
 <B>&nbsp;Evaluation &nbsp;*&nbsp;</B><SELECT NAME="evaluation" id="evaluation" required onchange="go()">
 <OPTION value=""></OPTION>
  <?php
-$sql1="select distinct evaluation from notes where notes.eleve in(select eleve from inscription where  classe='".htmlentities($sclasse)."' and annee='$annee')and evaluation in(select id from evaluations where annee='$annee' and classe='".htmlentities($sclasse)."' and 
-evaluations.discipline in(select discipline from enseigner where personnel='$personnel' and annee='$annee' and classe='".htmlentities($sclasse)."' )) order by evaluation desc";
-$req1=mysql_query($sql1);
+
 while($ligne1=mysql_fetch_array($req1))
 {
 $eva=$ligne1['evaluation'];
@@ -206,5 +200,5 @@ location.href="modif_notes.php?ajout=1&num='. $classe.'"
 	}
 }
 //}
-}
+//}
 ?>

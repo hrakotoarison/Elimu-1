@@ -51,7 +51,20 @@ $mois=date("n");
 		}
 		return $aca;
 }
-
+// Déterminer l'année académique précédente
+function preannee_academique(){
+ $aca="";
+$mois=date("n");
+        $annee=date("Y");
+		$annee1=date("Y")-1;
+		if( $mois>=10){
+		 $aca=$annee1 .'/'. $annee;
+		}
+		else{
+		 $aca=date("Y")-2 .'/'.$annee1;
+		}
+		return $aca;
+}
 function findByAll($table){
 
 	$sql_selection = "select * from ".$table." ;";
@@ -62,7 +75,7 @@ function findByAll($table){
 //compter le nombre de données
 function findByNbreValue($table,$condition){
 
-	$sql_selection = "select count(*) from ".$table." where ".$condition." ;";
+$sql_selection = "select count(*) from ".$table." where ".$condition." ;";
 	//echo"requete : ".$sql_selection;
  	$selection = mysql_query($sql_selection) or die(mysql_error());
 
@@ -78,7 +91,6 @@ function findBylib($table,$libelle){
 }
  // select disitinct $libelle 	avec condition <>
  function findNBylib($table,$libelle,$champ,$condition){
-
 	$sql_selection =  "select distinct $libelle from ".$table." where ".$champ." <> '".$condition."' ;";
  	$selection = mysql_query($sql_selection) or die(mysql_error());
 
@@ -170,6 +182,135 @@ return $info_con;
 //metre la 1er lettre en Majuscule
 function UcFirstAndToLower($str){     
 return ucfirst(strtolower(trim($str)));}	
-
-	
+//libelle semestre
+function libelle_semestre($semestre){
+	$reqse=findByNValue("semestres","id='$semestre'");
+	$lignese=mysql_fetch_array($reqse);
+	$lisemestre=$lignese['libelle'];
+	return $lisemestre;
+}
+//libelle classe
+function libclasse($classe){
+$t_classe = findByValue('classes','idclasse',$classe);
+	$ch_classe = mysql_fetch_array($t_classe);
+	$liclasse=$ch_classe['libelle'];
+	return $liclasse;
+}
+//connaitre le cycle de la classe de lélève
+function lcycle($classe){
+	$sqletude=findByNValuelib("etudes","cycle","idetude=(select etude from classes where idclasse='$classe')");
+	$lig=mysql_fetch_array($sqletude);
+	$cycle=$lig['cycle'];
+	return $cycle;
+	}
+// connaitre le niveau étude de la classe
+function niveauE($classe){
+	$sqletude=findByNValuelib("classes","etude","idclasse='$classe'");
+	$lig=mysql_fetch_array($sqletude);
+	$etude=$lig['etude'];
+	return $etude;
+	}
+//vérifier sil ya note de conduite findByNbreValue
+function Econduite($cycle){
+	$exess1=findByNValue("conduite","cycle='$cycle'");
+	$val=mysql_num_rows($exess1);	
+	return $val;
+	}
+//nbre absence pour le semestre choisi
+function absenceeleve($eleve,$annee,$semestre){
+	$reqseab=findByNbreValue("cahier_absence","eleve='$eleve' and annee='$annee' and semestre='$semestre'");
+	$absence_el = mysql_fetch_row($reqseab);
+	$absence=$absence_el[0];
+	return $absence;
+	}
+//nombre retard pour le semestre choisi
+function retardeleve($eleve,$annee,$semestre){
+	$reqseabr=findByNbreValue("cahier_retard","eleve='$eleve' and annee='$annee' and semestre='$semestre'");
+	$retard_el = mysql_fetch_row($reqseabr);
+	$retard=$retard_el[0];
+	return $retard;
+	}
+//Effectif de la clase pour l'année en cours
+function Effectifclasse($classe,$annee){
+	$sqlefclasse=findByNbreValue("inscription","classe='$classe' and annee='$annee' ");
+	$ef_classe = mysql_fetch_row($sqlefclasse);
+	$nombreel=$ef_classe[0];
+	return $nombreel;
+	}
+//moyenne Semestrielle
+function moyennesem($eleve,$annee,$semestre){
+	$ss1="select moyenne FROM moyennes WHERE eleve='$eleve' and annee='$annee'and semestre='$semestre'";
+	$rs1=mysql_query($ss1);
+	$ls1=mysql_fetch_array($rs1);
+	$moy=$ls1['moyenne'];
+	return $moy;
+	}
+//vérifier si l'élève est un redoublant de la classe 
+function redoublant($eleve,$classe,$annee){
+	$sql1="SELECT redoublant FROM inscription WHERE eleve='$eleve' and classe='$classe' and annee='$annee'";
+	$req1=mysql_query($sql1);
+	$ligne1=mysql_fetch_array($req1);
+	$redouble=$ligne1['redoublant'];	
+	return $redouble;
+}	
+	//vérifier sil a des notes de composition pour le premier semestre
+function verifNcomposotion($eleve,$annee,$classe,$semestre){	
+	$reqelesem1=findByNValue("moyennes","moyennes.eleve='$eleve' and semestre='$semestre' and annee='$annee'");
+	$nb=mysql_num_rows($reqelesem1);
+	return $nb;
+	}
+//moyenne des controles continus
+function moyennecontrole($se,$discipline,$eleve,$classe,$annee){
+$s="SELECT count(discipline) dv,sum(note) nt,round(sum(note)/count(discipline),3) md FROM evaluations,notes WHERE evaluations.id=notes.evaluation and evaluations.classe='$classe' and evaluations.annee='$annee'and
+ evaluations.type='DEVOIR' and evaluations.semestre='$se' and evaluations.discipline='$discipline' and notes.eleve='$eleve'";
+$r=mysql_query($s);
+$l=mysql_fetch_array($r);
+$dv=$l['dv'];
+$nt=$l['nt'];
+$md=$l['md'];
+return $md;
+}
+//note composition
+function notecomposition($classe,$annee,$se,$discipline,$eleve){
+$sc="SELECT note FROM evaluations,notes WHERE evaluations.id=notes.evaluation and evaluations.classe='$classe' and evaluations.annee='$annee'and
+ evaluations.type='COMPOSITION' and evaluations.semestre='$se' and evaluations.discipline='$discipline' and notes.eleve='$eleve'";
+$rc=mysql_query($sc);
+$lc=mysql_fetch_array($rc);
+$nc=$lc['note'];
+return $nc;
+}
+// moyenne semestrielle suivant une matiére donnée de l'éléve
+function moyenneuveleve($moyennedevoir,$notecompo){
+$ms=($moyennedevoir+$notecompo)/2;
+return $ms;
+}
+//coordonnées  tuteur suivant la classe	
+function coordonneetuteurclasse($classe,$annee){
+$sql_selection="SELECT tel_tuteur8,email_tuteur8 FROM eleves WHERE matricule in(select eleve from inscription where classe='$classe' and annee='$annee')";
+ 	$selection = mysql_query($sql_selection) or die(mysql_error());
+ 	return $selection;
+}
+//coordonnées  tuteur suivant l'annee en cours	
+function coordonneetuteur($annee){
+$sql_selection="SELECT tel_tuteur8,email_tuteur8 FROM eleves WHERE matricule in(select eleve from inscription where  annee='$annee')";
+ 	$selection = mysql_query($sql_selection) or die(mysql_error());
+ 	return $selection;
+}
+//rang 
+function rangeleveDiscipline($annee,$semestre,$moyenne,$discipline){
+$sqserang ="select count(eleve) nbre from moyennediscipline where  annee='$annee' and semestre='$semestre' and note>'$moyenne' and discipline='$discipline'  ";
+$reqserang=mysql_query($sqserang);
+$rang=mysql_fetch_array($reqserang);
+$rg=$rang['nbre']+1;
+return $rg;
+}
+//connaitre le nombré composé à une matiére donnée
+function nombreeleveDiscipline($annee,$semestre,$classe,$discipline){
+$sqserang ="select count(eleve) nbre from moyennediscipline where  annee='$annee' and semestre='$semestre'  and discipline='$discipline'and eleve
+ in(select eleve from inscription where classe='$classe' and annee='$annee')  ";
+$reqserang=mysql_query($sqserang);
+$rang=mysql_fetch_array($reqserang);
+$nbre=$rang['nbre'];
+return $nbre;
+}
 	?>

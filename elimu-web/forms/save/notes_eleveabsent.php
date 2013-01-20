@@ -1,6 +1,6 @@
 <?php
 //$_SESSION['classe']=;
-$sclasse=$_GET['num'];
+$sclasse=securite_bdd($_GET['num']);
 $personnel=$_SESSION['matricule'];
 $annee=annee_academique();
 $type='';
@@ -34,7 +34,7 @@ if(verif == false){champ.value = champ.value.substr(0,x) + champ.value.substr(x+
 }
 </script>
 
-<form name="inscription_form" action="<?php echo 'modif_notes.php?ajout=1&num='.$sclasse;?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
+<form name="inscription_form" action="<?php echo lien();?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 	<script language="Javascript">
@@ -105,8 +105,8 @@ else{
 <B>&nbsp;Evaluation &nbsp;*&nbsp;</B><SELECT NAME="evaluation" id="evaluation" required onchange="go()">
 <OPTION value=""></OPTION>
  <?php
-$sql1="select distinct evaluation from notes where notes.eleve in(select eleve from inscription where  classe='".htmlentities($sclasse)."' and annee='$annee')and evaluation in(select id from evaluations where annee='$annee' and classe='".htmlentities($sclasse)."' and 
-evaluations.discipline in(select discipline from enseigner where personnel='$personnel' and annee='$annee' and classe='".htmlentities($sclasse)."' )) order by evaluation desc";
+$sql1="select distinct evaluation from notes where notes.eleve in(select eleve from inscription where  classe='$sclasse' and annee='$annee')and evaluation in(select id from evaluations where annee='$annee' and classe='$sclasse' and 
+evaluations.discipline in(select discipline from enseigner where personnel='$personnel' and annee='$annee' and classe='$sclasse' )) order by evaluation desc";
 $req1=mysql_query($sql1);
 while($ligne1=mysql_fetch_array($req1))
 {

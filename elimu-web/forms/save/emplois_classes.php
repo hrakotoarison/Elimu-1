@@ -1,7 +1,7 @@
 <?php
-$_SESSION['classe']=$_GET['num'];
-$classe=$_GET['num'];
-$personnel=$_SESSION['matricule'];
+$_SESSION['classe']=securite_bdd($_GET['num']);
+$classe=securite_bdd($_GET['num']);
+$personnel=securite_bdd($_SESSION['matricule']);
 $annee=annee_academique();
 
 ?>
@@ -22,7 +22,7 @@ if(verif == false){champ.value = champ.value.substr(0,x) + champ.value.substr(x+
 
 }
 </script>
-<form name="inscription_form" action="<?php echo 'emplois_classes.php?ajout=1&num='.$classe;?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
+<form name="inscription_form" action="<?php echo lien();?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 <script language="Javascript">
@@ -217,8 +217,8 @@ $slib=accents($lign['libelle']);
 <OPTION value="21:00">21H10</OPTION>
 </TR>
 <TR><TD class=petit>&nbsp;</TD>
-<td><input type="hidden" name="classe" value="<?phpphp echo $classe;?>" id="classe"></td>
-<td><input type="hidden" name="annee" value="<?phpphp echo $annee;?>" id="annee"></td>
+<td><input type="hidden" name="classe" value="<?php echo $classe;?>" id="classe"></td>
+<td><input type="hidden" name="annee" value="<?php echo $annee;?>" id="annee"></td>
 </TR>
 
 <tr>

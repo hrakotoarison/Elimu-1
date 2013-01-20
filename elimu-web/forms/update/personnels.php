@@ -1,6 +1,6 @@
 <?php
 //modification des infos du personnel
-$matricule=$_GET['upd'];
+$matricule=securite_bdd($_GET['upd']);
 $etagiaire = findByValue('personnels','matricule',$matricule);
 						$row = mysql_fetch_row($etagiaire);
                        //$matricule=$row[0];
@@ -75,7 +75,7 @@ if(verif == false){champ.value = champ.value.substr(0,x) + champ.value.substr(x+
 
 }
 </script>
-<form name="inscription_form" action=<?php echo '"personnels.php?mod=1&upd='.$_GET['upd'].'"';?> method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
+<form name="inscription_form" action=<?php echo lien();?> method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 <script language="Javascript">

@@ -1,10 +1,10 @@
 <?php
 session_start();
 $rechtab="notes_evaluation";
-$menu=$_SESSION["menu"];
+@$menu=$_SESSION["menu"];
 $_SESSION["classe"]=$_GET['num'];
 include 'all_function.php';
-$menu=$_SESSION["menu"];
+@$menu=$_SESSION["menu"];
 $_SESSION["classe"]=$_GET['num'];
 $code=$_SESSION["classe"];
 $etag1 = findByValue('classes','idclasse',$code);
@@ -32,8 +32,8 @@ else {
 		}
 
 $p="";
-$uno=1;
-$dos=0;
+$uno=0;
+$dos=1;
 $trois=0;
 $quatre=0;
 $cinq=0;

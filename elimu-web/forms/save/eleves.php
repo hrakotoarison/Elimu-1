@@ -1,6 +1,6 @@
 <?php
 //$_SESSION['classe']=;
-$classe=$_GET['num'];
+$classe=securite_bdd($_GET['num']);
 $personnel=$_SESSION['matricule'];
 ?>
 <script language="Javascript">

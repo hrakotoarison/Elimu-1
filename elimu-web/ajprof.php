@@ -37,8 +37,6 @@ echo'<tr><td align="left">
     			}
 				
 ECHO'</SELECT ></td>
-
-
 <td><input type="hidden" name="annee" value="'.$annee.'"></td>
 </td></TR>';
 

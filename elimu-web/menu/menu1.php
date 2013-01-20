@@ -150,7 +150,7 @@ $code=$lignecl['classe'];
 $etag1 = findByValue('classes','idclasse',$code);
 						$cha1 = mysql_fetch_row($etag1);
 						$classe=$cha1[3];
-$conduitecc=("select count(*) nbo from classes where libelle='".$code."' and etude in(select libelle from etudes where cycle='MOYEN')");
+$conduitecc=("select count(*) nbo from classes where idclasse='".$code."' and etude in(select idetude from etudes where cycle='MOYEN')");
 $resultatcc=mysql_query($conduitecc);
 $lignecc=mysql_fetch_array($resultatcc);
 $nc=$lignecc['nbo'];
@@ -164,9 +164,11 @@ echo'
 <li><a href="emplois_classes.php?num='.$code.'" class="smenu">EMPLOI DU TEMPS</a></li>
 <li><a href="retards_eleves.php?num='.$code.'" class="smenu">RETARDS</a></li>';
 if($nc<>0)
-echo'<li><a href="notes_conduite.php?num='.$code.'" class="smenu">NOTES CONDUITE </a></li>';
-echo'</ul>
-</li>';
+echo'<li><a href="notes_conduite.php?num='.$code.'" class="smenu">NOTES CONDUITE </a></li>
+<li><a href="deliberation.php?num='.$code.'" class="smenu">DELIBERATION</a></li>
+<li><a href="informer_tuteur.php?num='.$code.'" class="smenu">INFORMER TUTEUR</a></li>
+';
+echo'</ul></li>';
 
 	}
 ?>

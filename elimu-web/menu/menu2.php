@@ -158,7 +158,7 @@ $etag1 = findByValue('classes','idclasse',$code);
 						$cha1 = mysql_fetch_row($etag1);
 						$classe=$cha1[3];
 if($nd<>0){
-$conduitecc=("select count(*) nbo from classes where libelle='".$code."' and etude in(select libelle from etudes where cycle='MOYEN')");
+$conduitecc=("select count(*) nbo from classes where idclasse='".$code."' and etude in(select idetude from etudes where cycle='MOYEN')");
 $resultatcc=mysql_query($conduitecc);
 $lignecc=mysql_fetch_array($resultatcc);
 $nc=$lignecc['nbo'];

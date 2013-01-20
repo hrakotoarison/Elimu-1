@@ -1,17 +1,10 @@
 <?php
-$classe=($_GET['num']);
-$personnel=($_SESSION['matricule']);
+$classe=securite_bdd($_GET['num']);
+$personnel=securite_bdd($_SESSION['matricule']);
 $annee=annee_academique();
-//selectionner les semestres programmés
-$rea=findByNValue("semestres","id in( select semestre from emploi_temps  where annee='$annee' and classe='".htmlentities($classe)."')");
- $url = $_SERVER['REQUEST_URI'];
-    if (substr($url, 0, 7)!=='http://') {
-        $url = 'http://'.$_SERVER['HTTP_HOST'];
-        if (ISSET($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT']!=80) $url.= ':'.$_SERVER['SERVER_PORT'];
-        $url.= $_SERVER['REQUEST_URI'];
-    }
+
 ?>
-<form name="inscription_form" action="<?php echo $url ;?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
+<form name="inscription_form" action="<?php echo lien() ;?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 <script language="Javascript">
@@ -79,6 +72,8 @@ function go1(){
 <TR><TD><B>&nbsp;Semestre :*</B>&nbsp;&nbsp;&nbsp;&nbsp;<SELECT NAME="semestre" id="semestre" required onchange="go1()" >
  <OPTION  value=""></OPTION>
  <?php
+ $sqa="SELECT id,libelle FROM semestres where annee='$annee'";
+$rea=mysql_query($sqa);
 while($ligna=mysql_fetch_array($rea))
 {
 $ids=$ligna['id'];

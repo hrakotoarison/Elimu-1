@@ -15,7 +15,7 @@ if(verif == false){champ.value = champ.value.substr(0,x) + champ.value.substr(x+
 
 }
 </script>
-<form name="inscription_form" action="<?php echo 'decision.php?ajout=1';?>" method="post"onsubmit='return (conform(this));' >
+<form name="inscription_form" action="<?php echo lien();?>" method="post"onsubmit='return (conform(this));' >
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 	<table border="0" cellpadding="3" cellspacing="0" width="600" >
@@ -41,18 +41,18 @@ placeholder="Selectionner" autofocus/ >
 	 <TD width="200" ROWSPAN=1 ALIGN=LEFT NOWRAP SIZE="2">Niveau Etude</TD>
 	 <table border=0 cellpadding=0 cellspacing=10 >
 	   <tr>       
-  <?php $sqlstm2d="select  distinct libelle from etudes where cycle='MOYEN' or cycle='SECONDAIRE' ORDER BY libelle";
+  <?php $sqlstm2d="select  distinct idetude,libelle from etudes where cycle='MOYEN' or cycle='SECONDAIRE' ORDER BY libelle";
 $req2d=mysql_query($sqlstm2d);
 
 while($ligne2d=mysql_fetch_array($req2d))
 {
 $slib2d=$ligne2d['libelle'];
-//$code=$ligne['codearticle'];
+$idetude=$ligne2d['idetude'];
 //$stock2=$ligne2['qtestock'];
 
 ?>
 <td>
-<INPUT type="checkbox" name="choix[]" value="<?php echo $slib2d;?>"> <?php echo $slib2d;?>
+<INPUT type="checkbox" name="choix[]" value="<?php echo $idetude;?>"> <?php echo $slib2d;?>
 </td>
 
   <?php

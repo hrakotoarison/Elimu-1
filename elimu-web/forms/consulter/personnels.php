@@ -1,9 +1,9 @@
 <?php
 function separationord($page,$id,$table,$champord,$long){
-	 if(@($_GET[$id])=="")
+	 if(@(securite_bdd($_GET[$id]))=="")
 	$compt=0;
 	else
-	$compt=$_GET[$id] ;
+	$compt=securite_bdd($_GET[$id]) ;
 	
 	if($compt==0)
 	 $sql="select * from $table  where enable8='1' order by $champord  limit $compt,".($long);

@@ -25,9 +25,9 @@ echo $datejour .' n\'est dans  aucun semestre donc impossible de faire un traite
 <table border="1" cellpadding="2" bordercolor="black" cellspacing="0" align="center">
 <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
   				 <tr bgcolor="white">
-                    <th width="350"> Date Prévue</th>
+                    <th width="300"> Date Prévue</th>
   				 	<th width="150">Horaire</th>
-  				 	<th width="100">Disciplines</th>				
+  				 	<th width="150">Disciplines</th>				
   				 	<th width="150">Classe</th>
   				 	<th width="150">Nature</th>					
   				 	<th width="150">Lieu</th>
@@ -51,7 +51,10 @@ $array_heure=explode(":",$hd);
 					 $titres = findByValue('disciplines','iddis',$dis);
 						$tit = mysql_fetch_row($titres);
 						$discipline=accents($tit[1]);
-						$classe=$row1[5];
+						$idclasse=$row1[5];
+						$t_classe = findByValue('classes','idclasse',$idclasse);
+						$ch_classe = mysql_fetch_row($t_classe);
+						$classe=$ch_classe[3];
 						$type=$row1[6];
 						$sal=$row1[9];
 						$titr = findByValue('salles','id',$sal);

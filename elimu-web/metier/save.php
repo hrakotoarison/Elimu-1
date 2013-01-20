@@ -1090,7 +1090,7 @@ if($type=='COMPOSITION'){
      
 	$exereq=mysql_query("select * from evaluations where date_prevue= '$dp' and discipline= '$discipline' and classe='".htmlentities($sclasse)."' and type='$type' and annee='$annee' and semestre='$semestre' ");
      if(mysql_num_rows($exereq)==0){
- 	echo$sql_ajout="INSERT INTO evaluations VALUES ('','$dp', '$debutc', '$finc','$discipline', '".htmlentities($sclasse)."', '$type', '$semestre','$annee','$salle')";
+ 	$sql_ajout="INSERT INTO evaluations VALUES ('','$dp', '$debutc', '$finc','$discipline', '".htmlentities($sclasse)."', '$type', '$semestre','$annee','$salle')";
 
 
    $query_ajout=mysql_query($sql_ajout) ;
@@ -1100,9 +1100,9 @@ if($type=='COMPOSITION'){
 							alert ("enregistrement valide");
 							}
 </SCRIPT>';
-echo'<SCRIPT LANGUAGE="JavaScript">
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="evaluationprof.php?ajout=1"
-</SCRIPT>';	
+</SCRIPT>';*/	
 
 			}
 else{
@@ -1111,18 +1111,19 @@ else{
 							alert ("Echec!Veuillez reprendre");
 							}
 </SCRIPT>';
-echo'<SCRIPT LANGUAGE="JavaScript">
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="evaluationprof.php?ajout=1"
-</SCRIPT>';	
+</SCRIPT>';	*/
      		}
      }
     else{
 	echo'<script Language="JavaScript">	{
     	alert( "Evaluation déja enregistrée");
 		}</SCRIPT>';
-echo'<SCRIPT LANGUAGE="JavaScript">
+		
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="evaluationprof.php?ajout=1"
-</SCRIPT>';	
+</SCRIPT>';	*/
 		
     }	 
 	}
@@ -1132,9 +1133,9 @@ else{
 							alert ("Une discipline ne peut pas avoir 2 notes de composition pour un meme semestre");
 							}
 </SCRIPT>';
-echo'<SCRIPT LANGUAGE="JavaScript">
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="evaluationprof.php?ajout=1"
-</SCRIPT>';
+</SCRIPT>';*/
 
 }
 	
@@ -1151,9 +1152,9 @@ else{
 							alert ("Evaluation Enregistrée");
 							}
 </SCRIPT>';
-echo'<SCRIPT LANGUAGE="JavaScript">
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="evaluationprof.php?ajout=1"
-</SCRIPT>';	
+</SCRIPT>';	*/
 
 			}
 			else
@@ -1163,9 +1164,9 @@ location.href="evaluationprof.php?ajout=1"
 							alert ("Echec!Veuillez reprendre");
 							}
 </SCRIPT>';
-echo'<SCRIPT LANGUAGE="JavaScript">
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="evaluationprof.php?ajout=1"
-</SCRIPT>';	
+</SCRIPT>';*/	
 
      		}
      }
@@ -1176,9 +1177,9 @@ location.href="evaluationprof.php?ajout=1"
     	alert( "Evaluation déja enregistrée");
 		}
 </SCRIPT>';
-echo'<SCRIPT LANGUAGE="JavaScript">
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="evaluationprof.php?ajout=1"
-</SCRIPT>';	
+</SCRIPT>';	*/
 		
     }
 	 
@@ -1326,9 +1327,9 @@ else{
     	alert( "Décision Enregistrée");
 		}
 </SCRIPT>';
-		echo'<SCRIPT LANGUAGE="JavaScript">
+		/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="decision.php"
-</SCRIPT>';
+</SCRIPT>';*/
 			}
 			else
 			{
@@ -1337,9 +1338,9 @@ location.href="decision.php"
     	alert( "Echec!Veuillez reprendre");
 		}
 </SCRIPT>';
-		echo'<SCRIPT LANGUAGE="JavaScript">
+		/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="ajdecision.php"
-</SCRIPT>';
+</SCRIPT>';*/
 				
 
      		}  
@@ -1355,9 +1356,9 @@ location.href="ajdecision.php"
     	alert( "Décision Modifiée");
 		}
 </SCRIPT>';
-		echo'<SCRIPT LANGUAGE="JavaScript">
+		/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="decision.php"
-</SCRIPT>';
+</SCRIPT>';*/
 			}
 			else
 			{
@@ -1434,9 +1435,9 @@ if($type=='COMPOSITION'){
 							alert ("enregistrement valide");
 							}
 </SCRIPT>';
-			echo'<SCRIPT LANGUAGE="JavaScript">
+			/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="evaluationprof.php"
-</SCRIPT>';
+</SCRIPT>';*/
 			}
 			else
 			{
@@ -1457,9 +1458,9 @@ location.href="ajevaluationprof.php?num='. $sclasse.'&annee='.$annee.'&matricule
     	alert( "Evaluation déja enregistrée");
 		}
 </SCRIPT>';
-		echo'<SCRIPT LANGUAGE="JavaScript">
+		/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="ajevaluationprof.php?num='. $sclasse.'&annee='.$annee.'&matricule='.$matricule.'"
-</SCRIPT>';
+</SCRIPT>';*/
 		
     }
 	 
@@ -1470,9 +1471,9 @@ location.href="ajevaluationprof.php?num='. $sclasse.'&annee='.$annee.'&matricule
     	alert( "la date doit être une date incluse dans le semestre en cours");
 		}
 </SCRIPT>';
-		echo'<SCRIPT LANGUAGE="JavaScript">
+		/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="ajevaluationprof.php?num='. $sclasse.'&annee='.$annee.'&matricule='.$matricule.'"
-</SCRIPT>';
+</SCRIPT>';*/
 		
 	 }
 	 
@@ -1484,9 +1485,9 @@ location.href="ajevaluationprof.php?num='. $sclasse.'&annee='.$annee.'&matricule
 							alert ("Une discipline ne peut pas avoir 2 notes de composition pour un meme semestre");
 							}
 </SCRIPT>';
-echo'<SCRIPT LANGUAGE="JavaScript">
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="ajevaluationprof.php?num='. $sclasse.'&annee='.$annee.'&matricule='.$matricule.'"
-</SCRIPT>';
+</SCRIPT>';*/
 }
 	
 }
@@ -1507,9 +1508,9 @@ else{
 							alert ("enregistrement valide");
 							}
 </SCRIPT>';
-			echo'<SCRIPT LANGUAGE="JavaScript">
+			/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="evaluationprof.php"
-</SCRIPT>';
+</SCRIPT>';*/
 			}
 			else
 			{
@@ -1518,9 +1519,9 @@ location.href="evaluationprof.php"
 							alert ("Echec!Veuillez reprendre");
 							}
 </SCRIPT>';
-echo'<SCRIPT LANGUAGE="JavaScript">
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="ajevaluationprof.php?num='. $sclasse.'&annee='.$annee.'&matricule='.$matricule.'"
-</SCRIPT>';
+</SCRIPT>';*/
      		}
      }
 
@@ -1530,9 +1531,9 @@ location.href="ajevaluationprof.php?num='. $sclasse.'&annee='.$annee.'&matricule
     	alert( "Evaluation déja enregistrée");
 		}
 </SCRIPT>';
-		echo'<SCRIPT LANGUAGE="JavaScript">
+		/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="ajevaluationprof.php?num='. $sclasse.'&annee='.$annee.'&matricule='.$matricule.'"
-</SCRIPT>';
+</SCRIPT>';*/
 		
     }
 	 
@@ -1544,9 +1545,9 @@ location.href="ajevaluationprof.php?num='. $sclasse.'&annee='.$annee.'&matricule
     	alert( "la date doit être une date incluse dans le semestre en cours1");
 		}
 </SCRIPT>';
-		echo'<SCRIPT LANGUAGE="JavaScript">
+		/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="ajevaluationprof.php?num='. $sclasse.'&annee='.$annee.'&matricule='.$matricule.'"
-</SCRIPT>';
+</SCRIPT>';*/
 		
 	//	echo $debuts.'<='.$dp .'and '.$dp.'<='.$fins;
 	 }
@@ -1575,11 +1576,11 @@ if($req2){
 echo'<script Language="JavaScript">
  {alert ("note Ajoutée");
  }';
-	echo'
+	/*echo'
 </SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
 location.href="el_notes.php?matricule='.$matricule.'&num='.$classe.'&annee='.$annee.'"
-</SCRIPT>';
+</SCRIPT>';*/
 }
 	else
 	{
@@ -1587,9 +1588,9 @@ location.href="el_notes.php?matricule='.$matricule.'&num='.$classe.'&annee='.$an
 		echo'<script Language="JavaScript">
  {alert ("Echec!Veuillez reprendre");
  }';
-		echo'<SCRIPT LANGUAGE="JavaScript">
+		/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="el_notes.php?matricule='.$matricule.'&num='.$classe.'&annee='.$annee.'"
-</SCRIPT>';
+</SCRIPT>';*/
 	}
 }
 }
@@ -1639,14 +1640,14 @@ else{
               $query_ajoutadr=mysql_query($sql1_ajoutr) ;	
 			}
 			if($discipline=='PROFESSEUR'){
-			echo'<SCRIPT LANGUAGE="JavaScript">
+			/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="specialite.php?num='. $matricule.'"
-</SCRIPT>';
+</SCRIPT>';*/
 			}
 			else{
-			echo'<SCRIPT LANGUAGE="JavaScript">
+			/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="fichepersonnel.php?num='. $matricule.'"
-</SCRIPT>';
+</SCRIPT>';*/
 }
 			}
 			else
@@ -1683,10 +1684,10 @@ if($req2){
 echo'<script Language="JavaScript">
  {alert ("Cours Ajoutée");
  }</SCRIPT>';
-	echo'
+	/*echo'
 <SCRIPT LANGUAGE="JavaScript">
 location.href="cahiertexte.php?ajout=1&num='.$classe.'"
-</SCRIPT>';
+</SCRIPT>';*/
 }
 	else
 	{
@@ -1695,10 +1696,10 @@ location.href="cahiertexte.php?ajout=1&num='.$classe.'"
  {alert ("Echec!Veuillez reprendre");
  }
  </script>';
-		echo'
+		/*echo'
 <SCRIPT LANGUAGE="JavaScript">
 location.href="cahiertexte.php?ajout=1&num='.$classe.'"
-</SCRIPT>';
+</SCRIPT>';*/
 	}
 }
 }
@@ -1727,10 +1728,10 @@ function save_paiement(){
 			if($query_ajout){
 
 				
-				echo'<SCRIPT LANGUAGE="JavaScript">
+				/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="facture.php?num='.$classe.'&matricule='.$eleve.'&annee='.$annee.'"
 
-</SCRIPT>';
+</SCRIPT>';*/
 			}
 			else
 			{
@@ -1740,10 +1741,10 @@ location.href="facture.php?num='.$classe.'&matricule='.$eleve.'&annee='.$annee.'
 				}
 </SCRIPT>';
 				
-				echo'<SCRIPT LANGUAGE="JavaScript">
+				/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="saisie_paiement.php?num='.$sclasse.'&matricule='.$eleve.'&annee='.$annee.'"
 
-</SCRIPT>';
+</SCRIPT>';*/
 			}
 		}
 
@@ -1820,10 +1821,10 @@ if ($mois=='12')
 							}
 </SCRIPT>';
 
-							echo'<SCRIPT LANGUAGE="JavaScript">
+							/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="lidepenses.php"
 
-</SCRIPT>';
+</SCRIPT>';*/
 
 			}
 			else
@@ -1833,10 +1834,9 @@ location.href="lidepenses.php"
 				{alert ("Echec ! veuillez reprendre SVP");
 				}
 </SCRIPT>';
-echo'<SCRIPT LANGUAGE="JavaScript">
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="depensesj.php"
-
-</SCRIPT>';
+</SCRIPT>';*/
 			} 
 
 
@@ -1871,10 +1871,10 @@ function save_depensemensuel(){
 							}
 </SCRIPT>';
 
-							echo'<SCRIPT LANGUAGE="JavaScript">
+							/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="lidepens_mensuel.php"
 
-</SCRIPT>';
+</SCRIPT>';*/
 
 			}
 			else
@@ -1885,10 +1885,9 @@ location.href="lidepens_mensuel.php"
 				{alert ("Echec ! veuillez reprendre SVP");
 				}
 </SCRIPT>';
-echo'<SCRIPT LANGUAGE="JavaScript">
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="depensesm.php"
-
-</SCRIPT>';
+</SCRIPT>';*/
 			}  /* */
 	}
 }
@@ -1931,9 +1930,9 @@ $exereq=mysql_query("select * from versement_banque where bordereau= '$bordereau
 							}
 </SCRIPT>';
 
-				echo'<SCRIPT LANGUAGE="JavaScript">
+				/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="saisie_versementb.php"
-</SCRIPT>';
+</SCRIPT>';*/
 
 			}
 			else
@@ -2026,9 +2025,9 @@ $exereq=mysql_query("select * from retrait where num_cheque= '$cheque'");
 							}
 </SCRIPT>';
 
-				echo'<SCRIPT LANGUAGE="JavaScript">
+				/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="retrait.php"
-</SCRIPT>';
+</SCRIPT>';*/
 
 			}
 			else
@@ -2087,10 +2086,10 @@ function save_avance_sal(){
 							}
 </SCRIPT>';
 
-							echo'<SCRIPT LANGUAGE="JavaScript">
+							/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="avanace_salaire.php"
 
-</SCRIPT>';
+</SCRIPT>';*/
 
 			}
 			else
@@ -2101,10 +2100,10 @@ location.href="avanace_salaire.php"
 				{alert ("Echec ! veuillez reprendre SVP");
 				}
 </SCRIPT>';
-echo'<SCRIPT LANGUAGE="JavaScript">
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="avanace_salaire.php"
 
-</SCRIPT>';
+</SCRIPT>';*/
 			}  /* */
 	}
 }
@@ -2133,10 +2132,10 @@ function save_salaire(){
 							}
 </SCRIPT>';
 
-							echo'<SCRIPT LANGUAGE="JavaScript">
+							/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="salaire_mensuel.php"
 
-</SCRIPT>';
+</SCRIPT>';*/
 
 			}
 			else
@@ -2147,10 +2146,9 @@ location.href="salaire_mensuel.php"
 				{alert ("Echec ! veuillez reprendre SVP");
 				}
 </SCRIPT>';
-echo'<SCRIPT LANGUAGE="JavaScript">
+/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="salaire_mensuel.php"
-
-</SCRIPT>';
+</SCRIPT>';*/
 			}  /* */
 	}
 }
@@ -2189,9 +2187,9 @@ $array_date=explode("/",$jour);
     	alert( "Absence professeur Enregistrée");
 		}
 </SCRIPT>';
-		echo'<SCRIPT LANGUAGE="JavaScript">
+		/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="absencepersonnel.php"
-</SCRIPT>';
+</SCRIPT>';*/
 			}
 			else
 			{
@@ -2200,9 +2198,9 @@ location.href="absencepersonnel.php"
     	alert( "Echec!Veuillez reprendre");
 		}
 </SCRIPT>';
-		echo'<SCRIPT LANGUAGE="JavaScript">
+		/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="saisie_absenceperso.php"
-</SCRIPT>';
+</SCRIPT>';*/
 				
 
      		}  
@@ -2214,9 +2212,9 @@ location.href="saisie_absenceperso.php"
     	alert( "Absence professeur Déja Enregistrée à cette date");
 		}
 </SCRIPT>';
-		echo'<SCRIPT LANGUAGE="JavaScript">
+		/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="absencepersonnel.php"
-</SCRIPT>';
+</SCRIPT>';*/
 
 			
      }
@@ -2250,9 +2248,9 @@ else{
    $query_ajout=mysql_query($sql_ajout) ;
 			if($query_ajout){
 			
-			echo'<SCRIPT LANGUAGE="JavaScript">
+			/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="personnels.php"
-</SCRIPT>';
+</SCRIPT>';*/
 
 			}
 			else
@@ -2305,9 +2303,9 @@ $array_date=explode("/",$jour);
     	alert( "Absence Eléve Enregistrée");
 		}
 </SCRIPT>';
-		echo'<SCRIPT LANGUAGE="JavaScript">
+		/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="absenceeleve.php?num='.$sclasse.'&annee='.$annee.'";
-</SCRIPT>';
+</SCRIPT>';*/
 			}
 			else
 			{
@@ -2316,9 +2314,9 @@ location.href="absenceeleve.php?num='.$sclasse.'&annee='.$annee.'";
     	alert( "Echec!Veuillez reprendre");
 		}
 </SCRIPT>';
-		echo'<SCRIPT LANGUAGE="JavaScript">
+		/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="absenceeleve.php?num='.$sclasse.'&annee='.$annee.'";
-</SCRIPT>';
+</SCRIPT>';*/
 				
 
      		}  
@@ -2330,9 +2328,9 @@ location.href="absenceeleve.php?num='.$sclasse.'&annee='.$annee.'";
     	alert( "Absence Eléve Déja Enregistrée à cette date");
 		}
 </SCRIPT>';
-	echo'<SCRIPT LANGUAGE="JavaScript">
+	/*echo'<SCRIPT LANGUAGE="JavaScript">
 location.href="absenceeleve.php?num='.$sclasse.'&annee='.$annee.'";
-</SCRIPT>';
+</SCRIPT>';*/
 
 			
      }

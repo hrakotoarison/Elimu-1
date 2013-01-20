@@ -1,5 +1,5 @@
  
-<form name="inscription_form" action="filieres.php?mod=1" method="post"onsubmit='return (conform(this));' >
+<form name="inscription_form" action=<?php echo lien();?> method="post"onsubmit='return (conform(this));' >
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 	<table border="0" cellpadding="3" cellspacing="0" width="600" >

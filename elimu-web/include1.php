@@ -278,7 +278,7 @@ var initSlider = function() {
                           }
                           elseif(isset($pageint))
                           include $pageint;
-						// echo $menupage;
+						// echo @$menupage;
 						
                          ?>
 						     </SPAN>

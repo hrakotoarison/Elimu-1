@@ -4,12 +4,7 @@ $sqs="select count(*)nb from etablissements where status ='PRIVE'";
 $rs=mysql_query($sqs);
 $ls=mysql_fetch_array($rs);
 $ns=$ls['nb'];
-/*if($profile=="Administrateur"){
-$sqlstm2d="select  distinct cycle from categories  ORDER BY cycle";
-}
-else{
-$sqlstm2d="select  distinct cycle from fonction where profile='$profile'  ORDER BY cycle";
-}*/
+
  ?>
 <script>
 function verif_nombre(champ)
@@ -28,7 +23,7 @@ if(verif == false){champ.value = champ.value.substr(0,x) + champ.value.substr(x+
 
 }
 </script>
-<form name="inscription_form" action="<?php echo 'profiles.php?ajout=1';?>" method="post"onsubmit='return (conform(this));' >
+<form name="inscription_form" action="<?php echo lien();?>" method="post"onsubmit='return (conform(this));' >
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 	<table border="0" cellpadding="3" cellspacing="0" width="600" >

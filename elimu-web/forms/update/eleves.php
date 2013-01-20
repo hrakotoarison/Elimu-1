@@ -1,10 +1,10 @@
 <?php
-$eleve=$_GET['eleve'];
-$sclasse=$_GET['num'];
+$eleve=securite_bdd($_GET['eleve']);
+$sclasse=securite_bdd($_GET['num']);
 $annee=annee_academique();
 $datejour=date("Y")."-".date("m")."-".date("d");
 //$matricule=$_SESSION["matricule"];
-$etagiaire = findByNValue('eleves',"matricule in (select eleve from inscription where annee='$annee' and classe='".htmlentities($sclasse)."')");
+$etagiaire = findByNValue('eleves',"matricule in (select eleve from inscription where annee='$annee' and classe='$sclasse')");
 						$row = mysql_fetch_row($etagiaire);
                        //$matricule=$row[0];
                            $matricule=$row[0];
@@ -27,7 +27,7 @@ $etagiaire = findByNValue('eleves',"matricule in (select eleve from inscription 
 						$sex = mysql_fetch_row($se);
 						$sx=$sex[1];
 						//matrimonial en cours
-						 $incription = findByNValue('inscription',"eleve='$eleve' and annee='$annee' and classe='".htmlentities($sclasse)."'");
+						 $incription = findByNValue('inscription',"eleve='$eleve' and annee='$annee' and classe='$sclasse'");
 						$incript = mysql_fetch_row($incription);
 						$transport=$incript[2];
 						  

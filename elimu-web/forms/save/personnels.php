@@ -1,4 +1,4 @@
-<form name="inscription_form" action="<?php echo 'personnels.php?ajout=1';?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
+<form name="inscription_form" action="<?php echo lien();?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 <script language="Javascript">

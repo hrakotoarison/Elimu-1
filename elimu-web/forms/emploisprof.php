@@ -17,7 +17,7 @@ while($ligne=mysql_fetch_array($req1))
 	$fin=$ligne['fin'];
 	}
 ?>
-<form name="inscription_form" action="<?php echo 'emploisprof.php=';?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
+<form name="inscription_form" action="<?php echo lien();?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 	<table border="0" cellpadding="3" cellspacing="0" width="100%" align=letf >
@@ -73,16 +73,19 @@ $classe=$ligne10u141000['classe'];
  $naturee = findByValue('salles','id',$sal);
 						$entitee = mysql_fetch_row($naturee);
 						$salle=$entitee[1];
+						$t_classe = findByValue('classes','idclasse',$classe);
+						$champs_classe = mysql_fetch_row($t_classe);
+						$l_classe=$champs_classe[3];
  $nature = findByValue('disciplines','iddis',$dis);
 						$entite = mysql_fetch_row($nature);
-						$discipline=htmlentities($entite[1]);
+						$discipline=$entite[1];
 
 if(mysql_num_rows($req10mu141000)==0){
 echo'<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP >-</TD>';
 }
 else{
 ?>
-<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP >&nbsp;<b><?php echo $classe.'<br/>'.$discipline.'<br/>'.$salle;?></b>&nbsp;</TD>
+<TD ALIGN=MIDDLE ROWSPAN=1 NOWRAP >&nbsp;<b><?php echo $l_classe.'<br/>'.$discipline.'<br/>'.$salle;?></b>&nbsp;</TD>
 <?php
 }
 }
@@ -99,7 +102,7 @@ echo'</table>';
 </TR>
 <TR><TD id="bouton">
 <div>          
-<a href="impression/impression.php?id=<?php echo $sclasse;?>&dates=<?php echo $annee;?>&page=<?php echo 'BILANMENSUEL';?>" target="_blank" class=imp>Apper&ccedil;u</a>
+<a href="impression/impression.php?id=<?php echo $matricule;?>&dates=<?php echo $annee;?>&page=<?php echo 'BILANMENSUEL';?>" target="_blank" class=imp>Apper&ccedil;u</a>
 </div>
 	</table>
 </div>

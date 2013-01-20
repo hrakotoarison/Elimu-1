@@ -20,7 +20,7 @@ if(verif == false){champ.value = champ.value.substr(0,x) + champ.value.substr(x+
 
 }
 </script>
-<form name="inscription_form" action="<?php echo 'evaluationprof.php?ajout=1';?>" method="post"onsubmit='return (conform(this));' >
+<form name="inscription_form" action="<?php echo lien();?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data" >
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 	<script language="Javascript">
@@ -145,14 +145,14 @@ function go2(){
 <B>&nbsp;Liste des Spécialités*</B><select name="discipline" id="discipline" onchange="go()" required>
 <OPTION value=""></OPTION>
 <?php
-$sqlstm2d="select iddis,libelle1 from disciplines where iddis
- in(select discipline from specialites where professeur='$matricule')   ORDER BY libelle1";
+echo $sqlstm2d="select iddis,libelle from disciplines where iddis
+ in(select discipline from specialites where professeur='$matricule')   ORDER BY libelle";
 $req2d=mysql_query($sqlstm2d);
 
 while($ligne2d=mysql_fetch_array($req2d))
 {
 $code_uv=$ligne2d['iddis'];
-$slib2d=$ligne2d['libelle1'];
+$slib2d=$ligne2d['libelle'];
  echo' <OPTION value="'.$code_uv.'">'.$slib2d;
  }
  echo'</OPTION>';?>

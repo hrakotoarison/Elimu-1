@@ -1,6 +1,6 @@
 <?php
 //$_SESSION['classe']=;
-$sclasse=$_GET['num'];
+$sclasse=securite_bdd($_GET['num']);
 $personnel=$_SESSION['matricule'];
 $annee=annee_academique();
 $type='';
@@ -31,7 +31,7 @@ $hd=$lignepa['hd'];
 $hf=$lignepa['hf'];
 }
 ?>
-<form name="inscription_form" action="<?php echo 'cahiertexte.php?ajout=1&num='.$sclasse;?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
+<form name="inscription_form" action="<?php echo lien();?>" method="post"onsubmit='return (conform(this));' enctype="multipart/form-data">
 <input name="action" value="submit" type="hidden">
 <div class="formbox">
 <script language="Javascript">
@@ -105,13 +105,13 @@ else{
 				 $datefr = $jour[date("w")];
 				 
 				 if($type=='HORAIRE')
-$sqlst="select id,debut,fin,discipline from emploi_temps where annee='$annee' and semestre='$codes'and classe='".htmlentities($sclasse)."' and professeur='$matricule'
+$sqlst="select id,debut,fin,discipline from emploi_temps where annee='$annee' and semestre='$codes'and classe='$sclasse' and professeur='$matricule'
  and jour=(select id from jours where libelle='$datefr') and id not in
- (select emploi from cours where annee='$annee' and cours.classe='".htmlentities($sclasse)."') and ((debut <'$hd' and fin<='$hf') or ( debut < '$hd' and fin< '$hf') or(debut >='$hf' and fin>='$hf') or ( debut < '$hd' and fin> '$hf')) ";
+ (select emploi from cours where annee='$annee' and cours.classe='$sclasse') and ((debut <'$hd' and fin<='$hf') or ( debut < '$hd' and fin< '$hf') or(debut >='$hf' and fin>='$hf') or ( debut < '$hd' and fin> '$hf')) ";
  else
-$sqlst="select id,debut,fin,discipline from emploi_temps where annee='$annee' and semestre='$codes'and classe='".htmlentities($sclasse)."' and professeur='$matricule'
+$sqlst="select id,debut,fin,discipline from emploi_temps where annee='$annee' and semestre='$codes'and classe='$sclasse' and professeur='$matricule'
  and jour=(select id from jours where libelle='$datefr') and id not in
- (select emploi from cours where annee='$annee' and cours.classe='".htmlentities($sclasse)."')";
+ (select emploi from cours where annee='$annee' and cours.classe='$sclasse')";
  if($type=='JOURNEE'){
 ECHO'Impossible de remplir le cahier de texte car vous être absent aujourdhui';
 }

@@ -1,6 +1,6 @@
 <?php
 session_start();
-$menu=$_SESSION["menu"];
+@$menu=$_SESSION["menu"];
 $profile=$_SESSION["profil"];
 if (isset($_GET["sup"])) {
   $titre="  coéffcients des Disciplines  >> Suppression" ;

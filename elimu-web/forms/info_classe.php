@@ -1,5 +1,5 @@
 <?php 
-$sclasse=$_GET['num'];
+$sclasse=securite_bdd($_GET['num']);
 $annee=annee_academique();
 
 ?>

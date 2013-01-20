@@ -148,8 +148,8 @@ while($ligne=mysql_fetch_array($req1))
 	$debut=$ligne['debut'];
 	$fin=$ligne['fin'];
 	}
-	if(@$libelle<>'' and $_SESSION["profil"]<>'Administrateur')
-	$affi= "Nous Sommes au <B>".@$libelle." </B>  qui s'étale du  ".$debut." au " .$fin;
+	if(@$libelle<>'' and @$_SESSION["profil"]<>'Administrateur')
+	$affi= "Nous Sommes au <B>".@$libelle." </B>  qui s'étale du  ".@$debut." au " .@$fin;
 ?>
 <center>
 <body bgcolor="#ffffff" OnLoad="Chargement();">
@@ -274,7 +274,7 @@ var initSlider = function() {
                           }
                           elseif(isset($pageint))
                           include @$pageint;
-						// echo $menupage;
+						// echo @$menupage;
 						
                          ?>
 						     </SPAN>

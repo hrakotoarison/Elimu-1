@@ -2,7 +2,7 @@
 session_start();
 $rechtab="Emploi du Temps";
 
-$menu=$_SESSION["menu"];
+@$menu=$_SESSION["menu"];
 include 'all_function.php';
 $_SESSION["classe"]=$_GET['num'];
 $code=$_SESSION["classe"];

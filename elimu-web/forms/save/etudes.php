@@ -1,11 +1,4 @@
 <?php
-//récupération l'adresse navigateur
- $url = $_SERVER['REQUEST_URI'];
-    if (substr($url, 0, 7)!=='http://') {
-        $url = 'http://'.$_SERVER['HTTP_HOST'];
-        if (ISSET($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT']!=80) $url.= ':'.$_SERVER['SERVER_PORT'];
-        $url.= $_SERVER['REQUEST_URI'];
-    }
 $sqs="select count(*)nb from etablissements where status ='PRIVE'";
 $rs=mysql_query($sqs);
 $ls=mysql_fetch_array($rs);
